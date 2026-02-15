@@ -1440,45 +1440,49 @@ section {
 
     .hero-mobile-image {
         display: block;
-        width: 100%;
+        /* make the image span the full viewport width */
+        width: 100vw;
         height: 380px;
-        background: linear-gradient(to right, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.4)),
-        url("../src/Home%20page%20image.jpeg") 20% center/cover no-repeat;
-        border-radius: 20px;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+        margin-left: calc((100% - 100vw) / 2);
+        margin-right: calc((100% - 100vw) / 2);
+        background-image: linear-gradient(to right, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.4)), url("../src/Home%20page%20image.jpeg");
+        background-position: center center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        border-radius: 0;
+        box-shadow: none;
+        border: none;
         position: relative;
         display: flex;
         align-items: center;
         justify-content: flex-end;
-        padding: 2rem 1.5rem;
+        padding: 0;
+        overflow: hidden;
     }
 
     .hero-mobile-title {
-        position: absolute;
-        top: 50%;
-        right: 1.5rem;
-        transform: translateY(-50%);
-        color: #ffffff;
-        text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.3);
-        font-size: 2.5rem;
+        position: static;
+        color: var(--text-dark);
+        text-shadow: none;
+        font-size: 1.9rem;
         font-weight: 800;
         line-height: 1.08;
-        text-align: right;
-        margin: 0;
-        max-width: 58%;
+        text-align: center;
+        margin: 0 0 0.5rem 0;
+        max-width: 100%;
         letter-spacing: -0.01em;
     }
 
     .hero-mobile-card {
-        background: var(--bg-white);
-        border: 1px solid var(--border-color);
-        border-radius: 20px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        padding: 2rem 1.75rem 2.25rem;
+        background: transparent;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+        padding: 1.25rem 0 1.5rem;
         text-align: center;
         display: flex;
         flex-direction: column;
-        gap: 1.25rem;
+        gap: 1rem;
         align-items: center;
     }
 
