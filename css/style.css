@@ -5,6 +5,34 @@
     box-sizing: border-box;
 }
 
+/* Desktop-specific override to ensure hero sizes stay intact on larger screens */
+@media (min-width: 769px) {
+    .hero-title {
+        font-size: 3.4rem;
+        font-weight: 700;
+        line-height: 1.05;
+    }
+    .hero-copy .hero-title {
+        text-align: right;
+        max-width: 600px;
+    }
+    .hero-subtitle {
+        font-size: 1.15rem;
+    }
+}
+
+/* Strong desktop override in case other rules cascade later */
+@media (min-width: 769px) {
+    .hero.hero-desktop .hero-copy .hero-title {
+        font-size: 3.4rem !important;
+        font-weight: 700 !important;
+        line-height: 1.05 !important;
+    }
+    .hero.hero-desktop .hero-copy .hero-subtitle {
+        font-size: 1.15rem !important;
+    }
+}
+
 :root {
     --primary-color: #14301f;
     --secondary-color: #3f7a4a;
@@ -1431,8 +1459,11 @@ section {
     }
 
     .hero-mobile-stack {
-        width: var(--mobile-hero-width);
-        margin: 0 auto;
+        /* make stack full viewport width so child content can span edges */
+        width: 100vw;
+        margin-left: calc((100% - 100vw) / 2);
+        margin-right: calc((100% - 100vw) / 2);
+        padding: 0 1rem;
         display: flex;
         flex-direction: column;
         gap: 1.2rem;
@@ -1478,12 +1509,13 @@ section {
         border: none;
         border-radius: 0;
         box-shadow: none;
-        padding: 1.25rem 0 1.5rem;
-        text-align: center;
+        padding: 0.75rem 0.75rem 1rem;
+        text-align: left;
         display: flex;
         flex-direction: column;
-        gap: 1rem;
-        align-items: center;
+        gap: 0.75rem;
+        align-items: stretch;
+        width: 100%;
     }
 
     .hero-mobile .eyebrow {
@@ -1828,18 +1860,25 @@ section {
 }
 
 @media (max-width: 480px) {
-    .hero-mobile-image {
-        height: 320px;
-        padding: 1.5rem 1.25rem;
-    }
-
     .hero-mobile-title {
-        font-size: 2rem;
-        right: 1.25rem;
-        max-width: 62%;
+        position: static;
+        color: var(--text-dark);
+        text-shadow: none;
+        font-size: 1.6rem;
+        font-weight: 800;
+        line-height: 1.05;
+        text-align: left;
+        margin: 0 0 0.25rem 0;
+        width: 100%;
+        letter-spacing: -0.01em;
+        word-break: keep-all;
     }
 
-    .hero-mobile {
+    .hero-mobile .hero-subtitle {
+        text-align: left;
+        max-width: 100%;
+        margin: 0;
+    }
         padding: 117px 0 4rem;
     }
     
