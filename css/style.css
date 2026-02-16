@@ -327,6 +327,7 @@ img {
 }
 
 .hero-title {
+    font-family: 'Manrope', 'Segoe UI', sans-serif;
     font-size: 3.4rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
@@ -1509,6 +1510,7 @@ section {
         z-index: 3;
         color: #ffffff;
         text-shadow: 0 6px 18px rgba(0,0,0,0.6);
+        font-family: 'Manrope', 'Segoe UI', sans-serif;
         font-size: 1.8rem;
         font-weight: 800;
         line-height: 1.05;
@@ -1522,6 +1524,7 @@ section {
         position: static;
         color: var(--text-dark);
         text-shadow: none;
+        font-family: 'Manrope', 'Segoe UI', sans-serif;
         font-size: 1.9rem;
         font-weight: 800;
         line-height: 1.08;
@@ -1891,6 +1894,7 @@ section {
         position: static;
         color: var(--text-dark);
         text-shadow: none;
+        font-family: 'Manrope', 'Segoe UI', sans-serif;
         font-size: 1.6rem;
         font-weight: 800;
         line-height: 1.05;
