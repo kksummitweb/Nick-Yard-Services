@@ -5,34 +5,6 @@
     box-sizing: border-box;
 }
 
-/* Desktop-specific override to ensure hero sizes stay intact on larger screens */
-@media (min-width: 769px) {
-    .hero-title {
-        font-size: 3.4rem;
-        font-weight: 700;
-        line-height: 1.05;
-    }
-    .hero-copy .hero-title {
-        text-align: right;
-        max-width: 600px;
-    }
-    .hero-subtitle {
-        font-size: 1.15rem;
-    }
-}
-
-/* Strong desktop override in case other rules cascade later */
-@media (min-width: 769px) {
-    .hero.hero-desktop .hero-copy .hero-title {
-        font-size: 3.4rem !important;
-        font-weight: 700 !important;
-        line-height: 1.05 !important;
-    }
-    .hero.hero-desktop .hero-copy .hero-subtitle {
-        font-size: 1.15rem !important;
-    }
-}
-
 :root {
     --primary-color: #14301f;
     --secondary-color: #3f7a4a;
@@ -343,6 +315,13 @@ img {
 }
 
 .hero-subtitle {
+    font-size: 1.15rem;
+    margin-bottom: 2.5rem;
+    opacity: 0.88;
+    animation: fadeInUp 0.9s ease forwards;
+}
+
+/* (rest of the provided CSS continues unchanged) */
     font-size: 1.15rem;
     margin-bottom: 2.5rem;
     opacity: 0.88;
