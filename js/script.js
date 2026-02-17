@@ -1,3 +1,12 @@
+(() => {
+    const { protocol, hostname, href } = window.location;
+    const isLocalhost = hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '[::1]';
+
+    if (protocol === 'http:' && !isLocalhost) {
+        window.location.replace(href.replace(/^http:/, 'https:'));
+    }
+})();
+
 // Contact form AJAX submission (URL-encoded for Google Apps Script)
 document.addEventListener('DOMContentLoaded', function() {
     const contactForm = document.getElementById('contactForm');
