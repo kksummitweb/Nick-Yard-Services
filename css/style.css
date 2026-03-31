@@ -2271,29 +2271,79 @@ body.promo-popup-open {
 }
 
 @media (max-width: 700px) {
+    .promo-popup-overlay {
+        padding: 0.75rem;
+        align-items: center;
+    }
+
     .promo-popup {
-        max-height: 90vh;
+        max-height: 80vh;
         overflow-y: auto;
-        border-radius: 16px;
+        border-radius: 14px;
     }
 
     .promo-popup-media {
-        aspect-ratio: 4 / 3;
+        aspect-ratio: 16 / 7;
     }
 
     .promo-popup-media img {
         height: 100%;
     }
 
+    .promo-popup::before {
+        display: none;
+    }
+
     .promo-popup-content {
-        padding: 1.45rem;
+        padding: 1rem 1.1rem 1.2rem;
+    }
+
+    .promo-popup-badge {
+        font-size: 0.65rem;
+        padding: 0.28rem 0.6rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .promo-popup-kicker {
+        font-size: 0.7rem;
+        margin-bottom: 0.2rem;
     }
 
     .promo-popup-content h3 {
-        font-size: 1.75rem;
+        font-size: 1.4rem;
+        margin-bottom: 0.45rem;
+    }
+
+    .promo-popup-content p {
+        font-size: 0.88rem;
+        margin-bottom: 0.55rem;
+    }
+
+    .promo-popup-list {
+        gap: 0.35rem;
+        margin-bottom: 0.6rem;
+    }
+
+    .promo-popup-list li {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.55rem;
+    }
+
+    .promo-popup-note {
+        font-size: 0.8rem;
+        margin-bottom: 0.7rem;
     }
 
     .promo-popup-cta {
         width: 100%;
+        min-height: 40px;
+        font-size: 0.85rem;
+        padding: 0.55rem 1rem;
+    }
+
+    .promo-popup-close {
+        width: 32px;
+        height: 32px;
+        font-size: 1.5rem;
     }
 }
