@@ -278,7 +278,7 @@ document.addEventListener('DOMContentLoaded', function() {
             slideshowInterval = window.setInterval(function() {
                 activeSlideIndex = (activeSlideIndex + 1) % slides.length;
                 showSlide(activeSlideIndex);
-            }, 4800);
+            }, 2500);
         }
     }
 
