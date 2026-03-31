@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
             formStatus.textContent = 'Sending...';
             formStatus.style.color = '#333';
             const formData = new URLSearchParams(new FormData(contactForm)).toString();
-            fetch('https://script.google.com/macros/s/AKfycbwUDkXP2r4njNaTKTjtdcprmGj9CeMb-iYlmd7Jpv1a34q27pc-UWyWoQwdiTQAEHw3/exec', {
+            fetch('https://script.google.com/macros/s/AKfycby7xg_LdnFY2Ze_ozFfFSDvmw4CNsBYXg5V_QJfUuSgl8KwsDZqEQZIEAitCSzNIb2t/exec', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: formData
