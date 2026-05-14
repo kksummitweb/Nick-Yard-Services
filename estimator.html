@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Get an instant lawn mowing and landscape maintenance estimate">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <title>Instant Estimate - Nick Yard Services</title>
+    <link rel="stylesheet" href="css/style.css?v=20260512">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Top Info Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-bar-content">
+                <div class="top-bar-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Oregon, WI 53575</span>
+                </div>
+                <div class="top-bar-item">
+                    <i class="fas fa-clock"></i>
+                    <span>Mon-Fri: 7:30 AM - 5:00 PM</span>
+                </div>
+                <div class="top-bar-item">
+                    <i class="fas fa-phone"></i>
+                    <span>(608) 886-5468</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-wrapper">
+                    <div class="logo">
+                        <a href="index.html" aria-label="Nick Yard Services home">
+                            <img src="src/image0.jpeg" alt="Nick Yard Services logo" class="logo-img">
+                        </a>
+                    </div>
+                    <ul class="nav-menu">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                    <div class="nav-actions">
+                        <a href="contact.html" class="nav-cta">Get a Quote</a>
+                        <a href="estimator.html" class="nav-cta">Instant Estimate</a>
+                    </div>
+                    <div class="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Get an Instant Estimate</h1>
+            <p>Landscape Maintenance (Lawn Mowing, Fertilization and Property Cleanups!)</p>
+        </div>
+    </section>
+
+    <main class="content-section">
+        <div class="container estimator-wrap">
+            <div class="estimator-shell">
+                <div class="estimator-top">
+                    <p class="step-pill">Estimator for Western Landscape LLC · 4 of 5</p>
+                    <button id="startOverEstimate" class="estimator-reset" type="button">Start Over</button>
+                </div>
+
+                <p class="estimator-brand">Estimator | Western Landscape LLC</p>
+
+                <form id="lawnEstimatorForm" novalidate>
+                    <div class="estimator-question">
+                        <h3>How many square feet is your lawn?</h3>
+                        <p>Enter your property square footage for a more accurate estimate.</p>
+                        <div class="form-group">
+                            <label for="squareFeet">Square Feet</label>
+                            <input type="number" id="squareFeet" name="squareFeet" min="100" step="50" placeholder="Example: 4500" required>
+                        </div>
+                    </div>
+
+                    <div class="estimator-question">
+                        <h3>Which services do you need?</h3>
+                        <p>Choose all that apply. (Select any that apply)</p>
+                        <div class="hint-row">
+                            <span>Select your answer.</span>
+                        </div>
+                        <div class="selectable-grid">
+                            <label class="selectable-option" for="serviceMowing">
+                                <input type="checkbox" id="serviceMowing" name="services" value="mowing">
+                                <span>Weekly lawn mowing</span>
+                            </label>
+                            <label class="selectable-option" for="serviceFertilization">
+                                <input type="checkbox" id="serviceFertilization" name="services" value="fertilization">
+                                <span>Fertilization and weed control</span>
+                            </label>
+                            <label class="selectable-option" for="serviceWeeding">
+                                <input type="checkbox" id="serviceWeeding" name="services" value="weeding">
+                                <span>Weeding/Landscape Bed Maintenance Per Month</span>
+                            </label>
+                            <label class="selectable-option" for="serviceCleanup">
+                                <input type="checkbox" id="serviceCleanup" name="services" value="cleanup">
+                                <span>Fall Or Spring Leaf Cleanup</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="estimator-question">
+                        <h3>What is the terrain like?</h3>
+                        <p>Terrain affects the complexity of maintenance.</p>
+                        <div class="hint-row">
+                            <a href="#" id="terrainLearnMore">Learn More</a>
+                            <span>Select your answer.</span>
+                        </div>
+                        <p id="terrainHelp" class="estimate-notes" hidden>Pricing guide by mowable square foot: Flat/Easy $0.0035-$0.0040, Mild Slope $0.0040-$0.0050, Moderate Slope $0.0050-$0.0065, Very Steep/Difficult $0.0065-$0.0090+.</p>
+                        <div class="selectable-grid">
+                            <label class="selectable-option" for="terrainFlat">
+                                <input type="radio" id="terrainFlat" name="terrain" value="flat" checked>
+                                <span>Flat / easy</span>
+                            </label>
+                            <label class="selectable-option" for="terrainMild">
+                                <input type="radio" id="terrainMild" name="terrain" value="mild">
+                                <span>Mild slope</span>
+                            </label>
+                            <label class="selectable-option" for="terrainModerate">
+                                <input type="radio" id="terrainModerate" name="terrain" value="moderate">
+                                <span>Moderate slope</span>
+                            </label>
+                            <label class="selectable-option" for="terrainSteep">
+                                <input type="radio" id="terrainSteep" name="terrain" value="steep">
+                                <span>Very steep / difficult</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="estimator-question">
+                        <h3>When do you need the service to start?</h3>
+                        <p>Let us know your preferred timing.</p>
+                        <div class="hint-row">
+                            <span>Select your answer.</span>
+                        </div>
+                        <div class="selectable-grid">
+                            <label class="selectable-option" for="timingAsap">
+                                <input type="radio" id="timingAsap" name="startTiming" value="asap" checked>
+                                <span>ASAP</span>
+                            </label>
+                            <label class="selectable-option" for="timingNextWeek">
+                                <input type="radio" id="timingNextWeek" name="startTiming" value="nextWeek">
+                                <span>Next week</span>
+                            </label>
+                            <label class="selectable-option" for="timingNextMonth">
+                                <input type="radio" id="timingNextMonth" name="startTiming" value="nextMonth">
+                                <span>Next month</span>
+                            </label>
+                            <label class="selectable-option" for="timingFlexible">
+                                <input type="radio" id="timingFlexible" name="startTiming" value="flexible">
+                                <span>No rush, flexible</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="estimator-actions">
+                        <button type="button" id="estimateBack" class="btn btn-secondary">Back</button>
+                        <button type="button" id="estimateNext" class="btn btn-primary">Next</button>
+                    </div>
+                </form>
+
+                <div class="estimate-output" id="estimateOutput">
+                    <h4>Your Instant Lawn Maintenance Estimate</h4>
+                    <p class="estimate-range" id="estimateRange">Add yard size and services</p>
+                    <p id="estimateSummary">Choose at least one service and enter your square footage to see your instant estimate.</p>
+                    <p class="estimate-notes" id="estimateNotes">Base mowing guide uses $0.0036-$0.0047 per sq ft depending on terrain. Final pricing may vary after on-site review.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready for a Confirmed Quote?</h2>
+                <p>Use this estimate as a starting point, then contact us for exact pricing.</p>
+                <a href="contact.html" class="btn btn-light">Get a Quote</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>Nick Yard Services</h3>
+                    <p>Providing quality services with professionalism and excellence.</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="services.html#mulching">Mulching</a></li>
+                        <li><a href="services.html#cleanups">Yard Cleanups</a></li>
+                        <li><a href="services.html#aeration">Core Aeration</a></li>
+                        <li><a href="services.html#mowing">Lawn Mowing</a></li>
+                        <li><a href="services.html#rock">Rock Installation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Contact Info</h4>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> Oregon, WI 53575</li>
+                        <li><i class="fas fa-phone"></i> (608) 886-5468</li>
+                        <li><i class="fas fa-envelope"></i> Nicksyardservicesco@gmail.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Nick Yard Services. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js?v=20260512"></script>
+</body>
+</html>

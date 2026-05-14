@@ -212,5 +212,109 @@ document.addEventListener('DOMContentLoaded', function() {
             // Example: Open modal with full-size image
         });
     });
+
+    // Lawn estimator behavior
+    const estimatorForm = document.getElementById('lawnEstimatorForm');
+
+    if (estimatorForm) {
+        const sqftInput = document.getElementById('squareFeet');
+        const terrainInputs = document.querySelectorAll('input[name="terrain"]');
+        const timingInputs = document.querySelectorAll('input[name="startTiming"]');
+        const serviceInputs = document.querySelectorAll('input[name="services"]');
+        const rangeValue = document.getElementById('estimateRange');
+        const estimateSummary = document.getElementById('estimateSummary');
+        const estimateNotes = document.getElementById('estimateNotes');
+        const resetButton = document.getElementById('startOverEstimate');
+        const backButton = document.getElementById('estimateBack');
+        const nextButton = document.getElementById('estimateNext');
+        const terrainLearnMore = document.getElementById('terrainLearnMore');
+        const terrainHelp = document.getElementById('terrainHelp');
+
+        const terrainPricePerSqFt = {
+            flat: { low: 0.0035, high: 0.0040, label: 'Flat / easy' },
+            mild: { low: 0.0040, high: 0.0050, label: 'Mild slope' },
+            moderate: { low: 0.0050, high: 0.0065, label: 'Moderate slope' },
+            steep: { low: 0.0065, high: 0.0090, label: 'Very steep / difficult' }
+        };
+
+        const getCheckedValue = inputList => {
+            const checked = Array.from(inputList).find(input => input.checked);
+            return checked ? checked.value : null;
+        };
+
+        const refreshSelectedStyles = () => {
+            const allSelectableOptions = document.querySelectorAll('.selectable-option');
+            allSelectableOptions.forEach(option => {
+                const field = option.querySelector('input');
+                option.classList.toggle('selected', Boolean(field && field.checked));
+            });
+        };
+
+        const formatMoney = value => `$${Math.round(value).toLocaleString()}`;
+
+        const calculateEstimate = () => {
+            const squareFeet = Number(sqftInput.value || 0);
+            const chosenServices = Array.from(serviceInputs)
+                .filter(input => input.checked)
+                .map(input => input.value);
+            const terrain = getCheckedValue(terrainInputs) || 'flat';
+            const timing = getCheckedValue(timingInputs) || 'nextMonth';
+            const terrainRate = terrainPricePerSqFt[terrain] || terrainPricePerSqFt.flat;
+
+            if (squareFeet <= 0 || chosenServices.length === 0) {
+                rangeValue.textContent = 'Add yard size and services';
+                estimateSummary.textContent = 'Choose at least one service and enter your square footage to see your instant estimate.';
+                estimateNotes.textContent = 'Base mowing guide uses $0.0036-$0.0047 per sq ft depending on terrain. Final pricing may vary after on-site review.';
+                return;
+            }
+
+            const lowEstimate = squareFeet * terrainRate.low;
+            const highEstimate = squareFeet * terrainRate.high;
+
+            rangeValue.textContent = `${formatMoney(lowEstimate)} - ${formatMoney(highEstimate)}`;
+            estimateSummary.textContent = `Estimated mowing range for ${Math.round(squareFeet).toLocaleString()} sq ft on ${terrainRate.label.toLowerCase()} terrain with ${chosenServices.length} selected service${chosenServices.length > 1 ? 's' : ''} and ${timing === 'asap' ? 'ASAP' : timing === 'nextWeek' ? 'next week' : timing === 'nextMonth' ? 'next month' : 'flexible'} start preference.`;
+            estimateNotes.textContent = `Rate used: $${terrainRate.low.toFixed(4)}-$${terrainRate.high.toFixed(4)} per sq ft based on terrain. Base mowing guide range is commonly $0.0036-$0.0047 per sq ft depending on site conditions.`;
+        };
+
+        estimatorForm.addEventListener('input', () => {
+            refreshSelectedStyles();
+            calculateEstimate();
+        });
+
+        if (resetButton) {
+            resetButton.addEventListener('click', () => {
+                estimatorForm.reset();
+                refreshSelectedStyles();
+                calculateEstimate();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
+        if (backButton) {
+            backButton.addEventListener('click', () => {
+                sqftInput.focus();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
+        if (nextButton) {
+            nextButton.addEventListener('click', () => {
+                const outputPanel = document.getElementById('estimateOutput');
+                if (outputPanel) {
+                    outputPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        }
+
+        if (terrainLearnMore && terrainHelp) {
+            terrainLearnMore.addEventListener('click', event => {
+                event.preventDefault();
+                terrainHelp.hidden = !terrainHelp.hidden;
+            });
+        }
+
+        refreshSelectedStyles();
+        calculateEstimate();
+    }
 });
 

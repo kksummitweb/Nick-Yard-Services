@@ -231,8 +231,14 @@ img {
     color: var(--hero-accent);
 }
 
-.nav-cta {
+.nav-actions {
     margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.nav-cta {
     padding: 0.8rem 2rem;
     background: linear-gradient(135deg, var(--secondary-color), #4a8a54);
     color: white;
@@ -249,6 +255,22 @@ img {
     background: linear-gradient(135deg, #4a8a54, var(--secondary-color));
     transform: translateY(-2px);
     box-shadow: 0 12px 28px rgba(63, 122, 74, 0.4);
+}
+
+.nav-actions .nav-cta {
+    margin-left: 0;
+}
+
+.nav-actions .nav-cta[href="estimator.html"] {
+    background: #ffffff;
+    color: var(--primary-color);
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.28);
+}
+
+.nav-actions .nav-cta[href="estimator.html"]:hover {
+    background: #f3f7f3;
+    color: var(--primary-color);
+    box-shadow: 0 12px 28px rgba(255, 255, 255, 0.36);
 }
 
 .hamburger {
@@ -1286,6 +1308,148 @@ section {
     color: var(--text-light);
 }
 
+/* ===== Estimator ===== */
+.estimator-wrap {
+    max-width: 980px;
+    margin: 0 auto;
+}
+
+.estimator-shell {
+    background: var(--bg-white);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    box-shadow: var(--shadow-soft);
+}
+
+.estimator-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.step-pill {
+    color: var(--hero-accent);
+    background: rgba(111, 219, 119, 0.12);
+    border: 1px solid rgba(111, 219, 119, 0.3);
+    border-radius: 999px;
+    padding: 0.25rem 0.8rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.estimator-reset {
+    border: none;
+    background: transparent;
+    color: var(--text-light);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.estimator-brand {
+    color: var(--text-light);
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+}
+
+.estimator-question {
+    margin-bottom: 2rem;
+}
+
+.estimator-question h3 {
+    color: var(--hero-accent);
+    margin-bottom: 0.35rem;
+    font-size: 1.35rem;
+}
+
+.estimator-question p {
+    color: var(--text-light);
+    margin-bottom: 1rem;
+}
+
+.hint-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.hint-row a {
+    color: var(--hero-accent);
+    text-decoration: underline;
+}
+
+.selectable-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.9rem;
+}
+
+.selectable-option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    background: var(--bg-light);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.selectable-option input {
+    accent-color: var(--secondary-color);
+}
+
+.selectable-option.selected {
+    border-color: var(--secondary-color);
+    background: rgba(63, 122, 74, 0.2);
+}
+
+.estimator-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0.75rem;
+}
+
+.estimate-output {
+    margin-top: 2rem;
+    background: linear-gradient(135deg, rgba(20, 48, 31, 0.96), rgba(29, 62, 39, 0.96));
+    border: 1px solid rgba(111, 219, 119, 0.35);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+}
+
+.estimate-output h4 {
+    color: #ffffff;
+    margin-bottom: 0.6rem;
+}
+
+.estimate-range {
+    font-size: 2rem;
+    color: var(--hero-accent);
+    line-height: 1.1;
+    margin-bottom: 0.6rem;
+}
+
+.estimate-output p,
+.estimate-notes {
+    color: #d4e4d6;
+    font-size: 0.95rem;
+}
+
+.estimate-notes {
+    margin-top: 0.8rem;
+}
+
 /* ===== Services Detail ===== */
 .services-detail-grid {
     display: grid;
@@ -1655,8 +1819,25 @@ section {
         color: var(--hero-accent);
     }
 
-    .nav-cta {
+    .nav-actions {
         display: none;
+    }
+
+    .selectable-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .estimator-shell {
+        padding: 1.2rem;
+    }
+
+    .estimator-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .estimate-range {
+        font-size: 1.7rem;
     }
 
     .hero-grid {
