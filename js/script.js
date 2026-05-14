@@ -217,6 +217,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const estimatorForm = document.getElementById('lawnEstimatorForm');
 
     if (estimatorForm) {
+        const estimatorSteps = Array.from(document.querySelectorAll('.estimator-step'));
+        const totalSteps = estimatorSteps.length;
+        let currentStep = 1;
+
         const sqftInput = document.getElementById('squareFeet');
         const terrainInputs = document.querySelectorAll('input[name="terrain"]');
         const timingInputs = document.querySelectorAll('input[name="startTiming"]');
@@ -224,17 +228,26 @@ document.addEventListener('DOMContentLoaded', function() {
         const rangeValue = document.getElementById('estimateRange');
         const estimateSummary = document.getElementById('estimateSummary');
         const estimateNotes = document.getElementById('estimateNotes');
+        const squareFeetError = document.getElementById('squareFeetError');
         const resetButton = document.getElementById('startOverEstimate');
         const backButton = document.getElementById('estimateBack');
         const nextButton = document.getElementById('estimateNext');
+        const stepCount = document.getElementById('estimatorStepCount');
+        const progressBar = document.getElementById('estimatorProgressBar');
         const terrainLearnMore = document.getElementById('terrainLearnMore');
         const terrainHelp = document.getElementById('terrainHelp');
 
         const terrainPricePerSqFt = {
-            flat: { low: 0.0035, high: 0.0040, label: 'Flat / easy' },
-            mild: { low: 0.0040, high: 0.0050, label: 'Mild slope' },
-            moderate: { low: 0.0050, high: 0.0065, label: 'Moderate slope' },
-            steep: { low: 0.0065, high: 0.0090, label: 'Very steep / difficult' }
+            flat: { low: 0.0035, high: 0.0040, label: 'Flat' },
+            slight: { low: 0.0040, high: 0.0050, label: 'Slightly sloped' },
+            steep: { low: 0.0065, high: 0.0090, label: 'Steep' }
+        };
+
+        const timingMultipliers = {
+            asap: 1.06,
+            nextWeek: 1.03,
+            nextMonth: 1,
+            flexible: 0.97
         };
 
         const getCheckedValue = inputList => {
@@ -268,40 +281,147 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            const lowEstimate = squareFeet * terrainRate.low;
-            const highEstimate = squareFeet * terrainRate.high;
+            const serviceMultiplier = 1 + Math.max(chosenServices.length - 1, 0) * 0.22;
+            const timingMultiplier = timingMultipliers[timing] || 1;
+            const lowEstimate = squareFeet * terrainRate.low * serviceMultiplier * timingMultiplier;
+            const highEstimate = squareFeet * terrainRate.high * serviceMultiplier * timingMultiplier;
 
             rangeValue.textContent = `${formatMoney(lowEstimate)} - ${formatMoney(highEstimate)}`;
-            estimateSummary.textContent = `Estimated mowing range for ${Math.round(squareFeet).toLocaleString()} sq ft on ${terrainRate.label.toLowerCase()} terrain with ${chosenServices.length} selected service${chosenServices.length > 1 ? 's' : ''} and ${timing === 'asap' ? 'ASAP' : timing === 'nextWeek' ? 'next week' : timing === 'nextMonth' ? 'next month' : 'flexible'} start preference.`;
-            estimateNotes.textContent = `Rate used: $${terrainRate.low.toFixed(4)}-$${terrainRate.high.toFixed(4)} per sq ft based on terrain. Base mowing guide range is commonly $0.0036-$0.0047 per sq ft depending on site conditions.`;
+            estimateSummary.textContent = `Estimated for ${Math.round(squareFeet).toLocaleString()} sq ft, ${chosenServices.length} selected service${chosenServices.length > 1 ? 's' : ''}, ${terrainRate.label.toLowerCase()} terrain, and ${timing === 'asap' ? 'ASAP' : timing === 'nextWeek' ? 'next week' : timing === 'nextMonth' ? 'next month' : 'flexible'} start timing.`;
+            estimateNotes.textContent = `Terrain rate used: $${terrainRate.low.toFixed(4)}-$${terrainRate.high.toFixed(4)} per sq ft. Additional selected services and scheduling preference adjust the final range.`;
+        };
+
+        const stepHasRequiredValue = stepNumber => {
+            if (stepNumber === 1) {
+                return Number(sqftInput.value || 0) >= 5000;
+            }
+
+            if (stepNumber === 2) {
+                return Array.from(serviceInputs).some(input => input.checked);
+            }
+
+            if (stepNumber === 3) {
+                return Boolean(getCheckedValue(terrainInputs));
+            }
+
+            if (stepNumber === 4) {
+                return Boolean(getCheckedValue(timingInputs));
+            }
+
+            return true;
+        };
+
+        const updateSquareFeetError = () => {
+            if (!squareFeetError) {
+                return;
+            }
+
+            const hasMinimumSqFt = Number(sqftInput.value || 0) >= 5000;
+            squareFeetError.hidden = hasMinimumSqFt;
+        };
+
+        const showStep = stepNumber => {
+            currentStep = Math.min(Math.max(stepNumber, 1), totalSteps);
+
+            estimatorSteps.forEach((step, index) => {
+                const isActive = index + 1 === currentStep;
+                step.hidden = !isActive;
+                step.classList.toggle('active', isActive);
+            });
+
+            if (stepCount) {
+                stepCount.textContent = `${currentStep} of ${totalSteps}`;
+            }
+
+            if (progressBar) {
+                progressBar.style.width = `${(currentStep / totalSteps) * 100}%`;
+            }
+
+            if (backButton) {
+                backButton.style.visibility = currentStep === 1 ? 'hidden' : 'visible';
+            }
+
+            if (resetButton) {
+                resetButton.style.visibility = currentStep <= 2 ? 'hidden' : 'visible';
+            }
+
+            if (nextButton) {
+                if (currentStep < totalSteps - 1) {
+                    nextButton.textContent = 'Next';
+                } else if (currentStep === totalSteps - 1) {
+                    nextButton.textContent = 'View Estimate';
+                } else {
+                    nextButton.textContent = 'Get a Quote';
+                }
+            }
+
+            if (currentStep === totalSteps) {
+                calculateEstimate();
+            }
         };
 
         estimatorForm.addEventListener('input', () => {
             refreshSelectedStyles();
-            calculateEstimate();
+
+            if (currentStep === 1) {
+                updateSquareFeetError();
+            }
+
+            if (currentStep === totalSteps) {
+                calculateEstimate();
+            }
         });
 
         if (resetButton) {
             resetButton.addEventListener('click', () => {
                 estimatorForm.reset();
                 refreshSelectedStyles();
-                calculateEstimate();
+                showStep(1);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         }
 
         if (backButton) {
             backButton.addEventListener('click', () => {
-                sqftInput.focus();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                if (currentStep > 1) {
+                    showStep(currentStep - 1);
+                }
             });
         }
 
         if (nextButton) {
             nextButton.addEventListener('click', () => {
-                const outputPanel = document.getElementById('estimateOutput');
-                if (outputPanel) {
-                    outputPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                if (currentStep < totalSteps) {
+                    if (!stepHasRequiredValue(currentStep)) {
+                        if (currentStep === 1) {
+                            updateSquareFeetError();
+                            sqftInput.focus();
+                        }
+                        return;
+                    }
+
+                    showStep(currentStep + 1);
+                    return;
+                }
+
+                window.location.href = 'contact.html';
+            });
+        }
+
+        if (sqftInput) {
+            sqftInput.addEventListener('keydown', event => {
+                if (event.key !== 'Enter' || currentStep !== 1) {
+                    return;
+                }
+
+                event.preventDefault();
+
+                if (stepHasRequiredValue(1)) {
+                    updateSquareFeetError();
+                    showStep(2);
+                } else {
+                    updateSquareFeetError();
+                    sqftInput.focus();
                 }
             });
         }
@@ -314,7 +434,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         refreshSelectedStyles();
-        calculateEstimate();
+        updateSquareFeetError();
+        showStep(1);
     }
 });
 

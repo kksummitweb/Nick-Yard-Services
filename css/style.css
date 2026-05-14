@@ -1315,7 +1315,7 @@ section {
 }
 
 .estimator-shell {
-    background: var(--bg-white);
+    background: radial-gradient(circle at 92% 6%, rgba(111, 219, 119, 0.12), transparent 42%), var(--bg-white);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
     padding: 2rem;
@@ -1325,21 +1325,25 @@ section {
 .estimator-top {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     gap: 1rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 .step-pill {
     color: var(--hero-accent);
-    background: rgba(111, 219, 119, 0.12);
-    border: 1px solid rgba(111, 219, 119, 0.3);
-    border-radius: 999px;
-    padding: 0.25rem 0.8rem;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    font-weight: 600;
+    font-weight: 700;
+}
+
+.step-count {
+    color: #ffffff;
+    font-size: 2rem;
+    line-height: 1;
+    margin-top: 0.35rem;
+    font-family: 'Cormorant Garamond', 'Times New Roman', serif;
 }
 
 .estimator-reset {
@@ -1348,12 +1352,41 @@ section {
     color: var(--text-light);
     font-weight: 600;
     cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 .estimator-brand {
-    color: var(--text-light);
+    color: #ffffff;
     margin-bottom: 1rem;
-    font-size: 0.95rem;
+    font-size: 1.12rem;
+    font-weight: 600;
+}
+
+.estimator-progress {
+    height: 8px;
+    width: 100%;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+
+.estimator-progress span {
+    display: block;
+    height: 100%;
+    width: 20%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #7bbf74, #b6e5b0);
+    transition: width 0.35s ease;
+}
+
+.estimator-step {
+    min-height: 300px;
+}
+
+.estimator-step:not(.active) {
+    display: none;
 }
 
 .estimator-question {
@@ -1371,6 +1404,39 @@ section {
     margin-bottom: 1rem;
 }
 
+.lot-size-input {
+    display: flex;
+    align-items: stretch;
+    gap: 0.75rem;
+}
+
+.lot-size-input input {
+    font-size: 2.1rem;
+    text-align: center;
+    font-weight: 700;
+    border-radius: 14px;
+    padding: 1rem;
+}
+
+.lot-size-unit {
+    min-width: 145px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    color: var(--text-dark);
+    background: rgba(255, 255, 255, 0.04);
+    font-weight: 600;
+}
+
+.estimator-error {
+    margin-top: 0.6rem;
+    color: #ffb7b7;
+    font-size: 0.92rem;
+    font-weight: 600;
+}
+
 .hint-row {
     display: flex;
     justify-content: space-between;
@@ -1383,6 +1449,7 @@ section {
 .hint-row a {
     color: var(--hero-accent);
     text-decoration: underline;
+    text-underline-offset: 2px;
 }
 
 .selectable-grid {
@@ -1391,16 +1458,25 @@ section {
     gap: 0.9rem;
 }
 
+.terrain-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 .selectable-option {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    padding: 0.9rem 1rem;
+    padding: 1rem 1.1rem;
     border: 1px solid var(--border-color);
-    border-radius: var(--radius-sm);
-    background: var(--bg-light);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
     cursor: pointer;
     transition: var(--transition);
+}
+
+.selectable-option:hover {
+    transform: translateY(-2px);
+    border-color: rgba(111, 219, 119, 0.45);
 }
 
 .selectable-option input {
@@ -1421,7 +1497,7 @@ section {
 }
 
 .estimate-output {
-    margin-top: 2rem;
+    margin-top: 0.25rem;
     background: linear-gradient(135deg, rgba(20, 48, 31, 0.96), rgba(29, 62, 39, 0.96));
     border: 1px solid rgba(111, 219, 119, 0.35);
     border-radius: var(--radius-md);
@@ -1825,6 +1901,23 @@ section {
 
     .selectable-grid {
         grid-template-columns: 1fr;
+    }
+
+    .terrain-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .lot-size-input {
+        flex-direction: column;
+    }
+
+    .lot-size-unit {
+        width: 100%;
+        min-height: 54px;
+    }
+
+    .step-count {
+        font-size: 1.6rem;
     }
 
     .estimator-shell {
