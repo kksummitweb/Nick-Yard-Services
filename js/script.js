@@ -250,10 +250,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const estimateSendStatus = document.getElementById('estimateSendStatus');
 
         const terrainPricePerSqFt = {
-            flat: { low: 0.0035, high: 0.0040, label: 'Flat / easy' },
-            mild: { low: 0.0040, high: 0.0050, label: 'Mild slope' },
-            moderate: { low: 0.0050, high: 0.0065, label: 'Moderate slope' },
-            steep: { low: 0.0065, high: 0.0090, label: 'Very steep / difficult' }
+            flat: { low: 0.0030, high: 0.0040, label: 'Flat / easy' },
+            mild: { low: 0.0038, high: 0.0049, label: 'Mild slope' },
+            moderate: { low: 0.0046, high: 0.0056, label: 'Moderate slope' },
+            steep: { low: 0.0060, high: 0.0085, label: 'Very steep / difficult' }
         };
 
         const timingMultipliers = {
@@ -288,7 +288,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (squareFeet <= 0) {
                 rangeValue.textContent = 'Add yard size';
                 estimateSummary.textContent = 'Enter your square footage to see your instant lawn mowing estimate.';
-                estimateNotes.textContent = 'Estimate includes terrain and scheduling adjustments. Final pricing may vary after on-site review.';
+                estimateNotes.textContent = 'Estimate includes terrain and scheduling adjustments. Pricing may be cheaper or more expensive based on our property evaluation.';
                 if (estimateLotSize) {
                     estimateLotSize.textContent = '-';
                 }
@@ -307,7 +307,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             rangeValue.textContent = `${formatMoney(lowEstimate)} - ${formatMoney(highEstimate)}`;
             estimateSummary.textContent = `Estimated mowing range for ${Math.round(squareFeet).toLocaleString()} sq ft on ${terrainRate.label.toLowerCase()} terrain with ${timingLabel.toLowerCase()} start timing.`;
-            estimateNotes.textContent = 'Estimate includes terrain and scheduling adjustments. Final pricing may vary after on-site review.';
+            estimateNotes.textContent = 'Estimate includes terrain and scheduling adjustments. Pricing may be cheaper or more expensive based on our property evaluation.';
             if (estimateLotSize) {
                 estimateLotSize.textContent = `${Math.round(squareFeet).toLocaleString()} sq ft`;
             }
