@@ -287,7 +287,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (squareFeet <= 0) {
                 rangeValue.textContent = 'Add yard size';
-                estimateSummary.textContent = 'Enter your square footage to see your instant lawn mowing estimate.';
+                estimateSummary.textContent = 'Enter your square footage to see your instant weekly lawn mowing estimate.';
                 estimateNotes.textContent = 'Estimate includes terrain and scheduling adjustments. Pricing may be cheaper or more expensive based on our property evaluation.';
                 if (estimateLotSize) {
                     estimateLotSize.textContent = '-';

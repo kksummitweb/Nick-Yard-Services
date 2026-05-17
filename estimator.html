@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Get an instant lawn mowing estimate">
+    <meta name="description" content="Get an instant weekly lawn mowing estimate">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <title>Instant Estimate - Nick Yard Services</title>
     <link rel="stylesheet" href="css/style.css?v=20260517">
@@ -67,7 +67,7 @@
     <section class="page-header">
         <div class="container">
             <h1>Get an Instant Estimate</h1>
-            <p>Lawn Mowing Estimate</p>
+            <p>Weekly Lawn Mowing Estimate</p>
         </div>
     </section>
 
@@ -81,7 +81,7 @@
                     <button id="startOverEstimate" class="estimator-reset" type="button">Start Over</button>
                 </div>
 
-                <p class="estimator-brand">Lawn Mowing</p>
+                <p class="estimator-brand">Weekly Lawn Mowing</p>
                 <div class="estimator-progress" aria-hidden="true">
                     <span id="estimatorProgressBar"></span>
                 </div>
@@ -96,7 +96,7 @@
                     <section class="estimator-step active" data-step="1">
                         <div class="estimator-question">
                             <h3>Enter Mowable Square Footage</h3>
-                            <p>Used to generate an instant lawn mowing range for your property.</p>
+                            <p>Used to generate an instant weekly lawn mowing range for your property.</p>
                             <div class="form-group lot-size-input">
                                 <input type="number" id="squareFeet" name="squareFeet" min="2000" step="50" placeholder="Example: 2000" required>
                                 <span class="lot-size-unit">Square Feet</span>
@@ -167,11 +167,11 @@
                         <div class="estimate-final-layout">
                             <div class="estimate-output" id="estimateOutput">
                                 <div class="estimate-header">
-                                    <p class="estimate-kicker">Instant Lawn Mowing Range</p>
-                                    <h4>Your Instant Lawn Mowing Estimate</h4>
+                                    <p class="estimate-kicker">Instant Weekly Lawn Mowing Range</p>
+                                    <h4>Your Instant Weekly Lawn Mowing Estimate</h4>
                                 </div>
                                 <p class="estimate-range" id="estimateRange">Add yard size</p>
-                                <p id="estimateSummary" class="estimate-summary">Enter your square footage to see your instant lawn mowing estimate.</p>
+                                <p id="estimateSummary" class="estimate-summary">Enter your square footage to see your instant weekly lawn mowing estimate.</p>
 
                                 <div class="estimate-metrics" aria-label="Estimate details">
                                     <div class="estimate-metric">
@@ -193,7 +193,7 @@
 
                             <div id="estimateSendForm" class="estimate-send-form">
                                 <h5>Send This Estimate</h5>
-                                <p>A copy can be sent to you and to the website owner.</p>
+                                <p>Estimate will be sent to the email given below.</p>
                                 <div class="estimate-send-grid">
                                     <div class="form-group">
                                         <label for="estimateCustomerName">Your Name *</label>
