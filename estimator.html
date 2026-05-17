@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Get an instant lawn mowing and landscape maintenance estimate">
+    <meta name="description" content="Get an instant lawn mowing estimate">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <title>Instant Estimate - Nick Yard Services</title>
     <link rel="stylesheet" href="css/style.css?v=20260512">
@@ -67,7 +67,7 @@
     <section class="page-header">
         <div class="container">
             <h1>Get an Instant Estimate</h1>
-            <p>Landscape Maintenance (Lawn Mowing, Fertilization and Property Cleanups!)</p>
+            <p>Lawn Mowing Estimate</p>
         </div>
     </section>
 
@@ -77,56 +77,35 @@
                 <div class="estimator-top">
                     <div>
                         <p class="step-pill" id="estimatorStepTitle">Estimator for Western Landscape LLC</p>
-                        <p class="step-count" id="estimatorStepCount">1 of 5</p>
                     </div>
                     <button id="startOverEstimate" class="estimator-reset" type="button">Start Over</button>
                 </div>
 
-                <p class="estimator-brand">Landscape Maintenance (Lawn Mowing, Fertilization and Property Cleanups!)</p>
+                <p class="estimator-brand">Lawn Mowing</p>
                 <div class="estimator-progress" aria-hidden="true">
                     <span id="estimatorProgressBar"></span>
                 </div>
+                <ol class="estimator-milestones" id="estimatorMilestones" aria-label="Estimator progress">
+                    <li class="milestone active" data-step="1"><span>Lot Size</span></li>
+                    <li class="milestone" data-step="2"><span>Terrain</span></li>
+                    <li class="milestone" data-step="3"><span>Timing</span></li>
+                    <li class="milestone" data-step="4"><span>Estimate</span></li>
+                </ol>
 
                 <form id="lawnEstimatorForm" novalidate>
                     <section class="estimator-step active" data-step="1">
                         <div class="estimator-question">
+                            <h3>Enter Mowable Square Footage</h3>
+                            <p>Used to generate an instant lawn mowing range for your property.</p>
                             <div class="form-group lot-size-input">
-                                <input type="number" id="squareFeet" name="squareFeet" min="5000" step="50" placeholder="Example: 5000" required>
+                                <input type="number" id="squareFeet" name="squareFeet" min="2000" step="50" placeholder="Example: 2000" required>
                                 <span class="lot-size-unit">Square Feet</span>
                             </div>
-                            <p id="squareFeetError" class="estimator-error" hidden>A minimum of 5000 sq ft is required.</p>
+                            <p id="squareFeetError" class="estimator-error" hidden>A minimum of 2000 sq ft is required.</p>
                         </div>
                     </section>
 
                     <section class="estimator-step" data-step="2" hidden>
-                        <div class="estimator-question">
-                            <h3>Which services do you need?</h3>
-                            <p>Choose all that apply. (Select any that apply)</p>
-                            <div class="hint-row">
-                                <span>Select your answer.</span>
-                            </div>
-                            <div class="selectable-grid">
-                                <label class="selectable-option" for="serviceMowing">
-                                    <input type="checkbox" id="serviceMowing" name="services" value="mowing">
-                                    <span>Weekly lawn mowing</span>
-                                </label>
-                                <label class="selectable-option" for="serviceFertilization">
-                                    <input type="checkbox" id="serviceFertilization" name="services" value="fertilization">
-                                    <span>Fertilization and weed control</span>
-                                </label>
-                                <label class="selectable-option" for="serviceWeeding">
-                                    <input type="checkbox" id="serviceWeeding" name="services" value="weeding">
-                                    <span>Weeding/Landscape Bed Maintenance Per Month</span>
-                                </label>
-                                <label class="selectable-option" for="serviceCleanup">
-                                    <input type="checkbox" id="serviceCleanup" name="services" value="cleanup">
-                                    <span>Fall Or Spring Leaf Cleanup</span>
-                                </label>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section class="estimator-step" data-step="3" hidden>
                         <div class="estimator-question">
                             <h3>What is the terrain like?</h3>
                             <p>Terrain affects the complexity of maintenance.</p>
@@ -152,7 +131,7 @@
                         </div>
                     </section>
 
-                    <section class="estimator-step" data-step="4" hidden>
+                    <section class="estimator-step" data-step="3" hidden>
                         <div class="estimator-question">
                             <h3>When do you need the service to start?</h3>
                             <p>Let us know your preferred timing.</p>
@@ -180,11 +159,11 @@
                         </div>
                     </section>
 
-                    <section class="estimator-step" data-step="5" hidden>
+                    <section class="estimator-step" data-step="4" hidden>
                         <div class="estimate-output" id="estimateOutput">
-                            <h4>Your Instant Lawn Maintenance Estimate</h4>
-                            <p class="estimate-range" id="estimateRange">Add yard size and services</p>
-                            <p id="estimateSummary">Choose at least one service and enter your square footage to see your instant estimate.</p>
+                            <h4>Your Instant Lawn Mowing Estimate</h4>
+                            <p class="estimate-range" id="estimateRange">Add yard size</p>
+                            <p id="estimateSummary">Enter your square footage to see your instant lawn mowing estimate.</p>
                             <p class="estimate-notes" id="estimateNotes">Base mowing guide uses $0.0036-$0.0047 per sq ft depending on terrain. Final pricing may vary after on-site review.</p>
                         </div>
                     </section>

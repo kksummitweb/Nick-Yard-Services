@@ -224,7 +224,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const sqftInput = document.getElementById('squareFeet');
         const terrainInputs = document.querySelectorAll('input[name="terrain"]');
         const timingInputs = document.querySelectorAll('input[name="startTiming"]');
-        const serviceInputs = document.querySelectorAll('input[name="services"]');
         const rangeValue = document.getElementById('estimateRange');
         const estimateSummary = document.getElementById('estimateSummary');
         const estimateNotes = document.getElementById('estimateNotes');
@@ -232,8 +231,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const resetButton = document.getElementById('startOverEstimate');
         const backButton = document.getElementById('estimateBack');
         const nextButton = document.getElementById('estimateNext');
-        const stepCount = document.getElementById('estimatorStepCount');
         const progressBar = document.getElementById('estimatorProgressBar');
+        const milestoneItems = Array.from(document.querySelectorAll('.milestone'));
         const terrainLearnMore = document.getElementById('terrainLearnMore');
         const terrainHelp = document.getElementById('terrainHelp');
 
@@ -267,44 +266,36 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const calculateEstimate = () => {
             const squareFeet = Number(sqftInput.value || 0);
-            const chosenServices = Array.from(serviceInputs)
-                .filter(input => input.checked)
-                .map(input => input.value);
             const terrain = getCheckedValue(terrainInputs) || 'flat';
             const timing = getCheckedValue(timingInputs) || 'nextMonth';
             const terrainRate = terrainPricePerSqFt[terrain] || terrainPricePerSqFt.flat;
 
-            if (squareFeet <= 0 || chosenServices.length === 0) {
-                rangeValue.textContent = 'Add yard size and services';
-                estimateSummary.textContent = 'Choose at least one service and enter your square footage to see your instant estimate.';
+            if (squareFeet <= 0) {
+                rangeValue.textContent = 'Add yard size';
+                estimateSummary.textContent = 'Enter your square footage to see your instant lawn mowing estimate.';
                 estimateNotes.textContent = 'Base mowing guide uses $0.0036-$0.0047 per sq ft depending on terrain. Final pricing may vary after on-site review.';
                 return;
             }
 
-            const serviceMultiplier = 1 + Math.max(chosenServices.length - 1, 0) * 0.22;
             const timingMultiplier = timingMultipliers[timing] || 1;
-            const lowEstimate = squareFeet * terrainRate.low * serviceMultiplier * timingMultiplier;
-            const highEstimate = squareFeet * terrainRate.high * serviceMultiplier * timingMultiplier;
+            const lowEstimate = squareFeet * terrainRate.low * timingMultiplier;
+            const highEstimate = squareFeet * terrainRate.high * timingMultiplier;
 
             rangeValue.textContent = `${formatMoney(lowEstimate)} - ${formatMoney(highEstimate)}`;
-            estimateSummary.textContent = `Estimated for ${Math.round(squareFeet).toLocaleString()} sq ft, ${chosenServices.length} selected service${chosenServices.length > 1 ? 's' : ''}, ${terrainRate.label.toLowerCase()} terrain, and ${timing === 'asap' ? 'ASAP' : timing === 'nextWeek' ? 'next week' : timing === 'nextMonth' ? 'next month' : 'flexible'} start timing.`;
-            estimateNotes.textContent = `Terrain rate used: $${terrainRate.low.toFixed(4)}-$${terrainRate.high.toFixed(4)} per sq ft. Additional selected services and scheduling preference adjust the final range.`;
+            estimateSummary.textContent = `Estimated mowing range for ${Math.round(squareFeet).toLocaleString()} sq ft on ${terrainRate.label.toLowerCase()} terrain with ${timing === 'asap' ? 'ASAP' : timing === 'nextWeek' ? 'next week' : timing === 'nextMonth' ? 'next month' : 'flexible'} start timing.`;
+            estimateNotes.textContent = 'Estimate includes terrain and scheduling adjustments. Final pricing may vary after on-site review.';
         };
 
         const stepHasRequiredValue = stepNumber => {
             if (stepNumber === 1) {
-                return Number(sqftInput.value || 0) >= 5000;
+                return Number(sqftInput.value || 0) >= 2000;
             }
 
             if (stepNumber === 2) {
-                return Array.from(serviceInputs).some(input => input.checked);
-            }
-
-            if (stepNumber === 3) {
                 return Boolean(getCheckedValue(terrainInputs));
             }
 
-            if (stepNumber === 4) {
+            if (stepNumber === 3) {
                 return Boolean(getCheckedValue(timingInputs));
             }
 
@@ -316,7 +307,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            const hasMinimumSqFt = Number(sqftInput.value || 0) >= 5000;
+            const hasMinimumSqFt = Number(sqftInput.value || 0) >= 2000;
             squareFeetError.hidden = hasMinimumSqFt;
         };
 
@@ -329,12 +320,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 step.classList.toggle('active', isActive);
             });
 
-            if (stepCount) {
-                stepCount.textContent = `${currentStep} of ${totalSteps}`;
-            }
-
             if (progressBar) {
                 progressBar.style.width = `${(currentStep / totalSteps) * 100}%`;
+            }
+
+            if (milestoneItems.length > 0) {
+                milestoneItems.forEach((item, index) => {
+                    const stepIndex = index + 1;
+                    item.classList.toggle('active', stepIndex === currentStep);
+                    item.classList.toggle('completed', stepIndex < currentStep);
+                });
             }
 
             if (backButton) {
@@ -342,7 +337,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             if (resetButton) {
-                resetButton.style.visibility = currentStep <= 2 ? 'hidden' : 'visible';
+                resetButton.style.visibility = currentStep <= 1 ? 'hidden' : 'visible';
             }
 
             if (nextButton) {
