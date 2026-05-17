@@ -8,7 +8,8 @@
 })();
 
 const CONTACT_FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycby7xg_LdnFY2Ze_ozFfFSDvmw4CNsBYXg5V_QJfUuSgl8KwsDZqEQZIEAitCSzNIb2t/exec';
-const ESTIMATE_FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxq_LyaW0TVyZYY48AXouieUBxoVOrM-V2r1hTGpMB_nvyVQYlSAA0iSYGK_IdFW2Xa/exec';
+const ESTIMATE_FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycbz-wC6KlxnOmsuuOOvFwjH8-uIzKUlSrdlSwgagi1dRfXqDF10SP-gZWPK7C7SIAfJe/exec';
+const OWNER_NOTIFICATION_EMAIL = 'nicksyardservices9@gmail.com';
 
 // Contact form AJAX submission (URL-encoded for Google Apps Script)
 document.addEventListener('DOMContentLoaded', function() {
@@ -19,7 +20,9 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             formStatus.textContent = 'Sending...';
             formStatus.style.color = '#333';
-            const formData = new URLSearchParams(new FormData(contactForm)).toString();
+            const formPayload = new URLSearchParams(new FormData(contactForm));
+            formPayload.set('ownerEmail', OWNER_NOTIFICATION_EMAIL);
+            const formData = formPayload.toString();
             fetch(CONTACT_FORM_ENDPOINT, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -245,7 +248,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const estimateSendForm = document.getElementById('estimateSendForm');
         const estimateSendBtn = document.getElementById('estimateSendBtn');
         const estimateSendStatus = document.getElementById('estimateSendStatus');
-        const estimateOwnerEmail = document.getElementById('estimateOwnerEmail');
 
         const terrainPricePerSqFt = {
             flat: { low: 0.0035, high: 0.0040, label: 'Flat' },
@@ -443,20 +445,65 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
+        // Step 1: Square Feet input (already handled)
         if (sqftInput) {
             sqftInput.addEventListener('keydown', event => {
                 if (event.key !== 'Enter' || currentStep !== 1) {
                     return;
                 }
-
                 event.preventDefault();
-
                 if (stepHasRequiredValue(1)) {
                     updateSquareFeetError();
                     showStep(2);
                 } else {
                     updateSquareFeetError();
                     sqftInput.focus();
+                }
+            });
+        }
+
+        // Step 2: Terrain radio group
+        if (terrainInputs && terrainInputs.length) {
+            terrainInputs.forEach(input => {
+                input.addEventListener('keydown', event => {
+                    if (event.key !== 'Enter' || currentStep !== 2) return;
+                    event.preventDefault();
+                    if (stepHasRequiredValue(2)) {
+                        showStep(3);
+                    }
+                });
+            });
+        }
+
+        // Step 3: Timing radio group
+        if (timingInputs && timingInputs.length) {
+            timingInputs.forEach(input => {
+                input.addEventListener('keydown', event => {
+                    if (event.key !== 'Enter' || currentStep !== 3) return;
+                    event.preventDefault();
+                    if (stepHasRequiredValue(3)) {
+                        showStep(4);
+                    }
+                });
+            });
+        }
+
+        // Step 4: Send step (name/email fields)
+        const customerNameInput = document.getElementById('estimateCustomerName');
+        const customerEmailInput = document.getElementById('estimateCustomerEmail');
+        if (customerNameInput) {
+            customerNameInput.addEventListener('keydown', event => {
+                if (event.key === 'Enter' && currentStep === 4) {
+                    event.preventDefault();
+                    if (estimateSendBtn) estimateSendBtn.click();
+                }
+            });
+        }
+        if (customerEmailInput) {
+            customerEmailInput.addEventListener('keydown', event => {
+                if (event.key === 'Enter' && currentStep === 4) {
+                    event.preventDefault();
+                    if (estimateSendBtn) estimateSendBtn.click();
                 }
             });
         }
@@ -484,7 +531,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     formType: 'estimate',
                     customerName: document.getElementById('estimateCustomerName')?.value || '',
                     customerEmail: document.getElementById('estimateCustomerEmail')?.value || '',
-                    ownerEmail: estimateOwnerEmail?.value || '',
+                    ownerEmail: OWNER_NOTIFICATION_EMAIL,
                     squareFeet: String(Number(sqftInput.value || 0)),
                     terrain: terrainRate.label,
                     startTiming: timing,
@@ -504,10 +551,22 @@ document.addEventListener('DOMContentLoaded', function() {
                         throw new Error('Network response was not ok');
                     }
 
+                    let result = null;
+                    try {
+                        result = await response.json();
+                    } catch (parseError) {
+                        throw new Error('Invalid response from estimate service');
+                    }
+
+                    if (!result || result.result !== 'success') {
+                        const serverMessage = result && result.message ? result.message : 'Estimate service returned an error';
+                        throw new Error(serverMessage);
+                    }
+
                     estimateSendStatus.textContent = 'Success! Your estimate was sent. Please check your email for a copy.';
                     estimateSendStatus.style.color = '#27ae60';
                 } catch (error) {
-                    estimateSendStatus.textContent = 'Sorry, the estimate could not be sent right now. Please try again.';
+                    estimateSendStatus.textContent = `Sorry, the estimate could not be sent right now. ${error.message || 'Please try again.'}`;
                     estimateSendStatus.style.color = '#ffb7b7';
                 }
             });
