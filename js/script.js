@@ -525,6 +525,36 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
+        const submitEstimateByFormPost = params => {
+            const frameName = `estimateSubmitFrame_${Date.now()}`;
+            const iframe = document.createElement('iframe');
+            iframe.name = frameName;
+            iframe.style.display = 'none';
+
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = ESTIMATE_FORM_ENDPOINT;
+            form.target = frameName;
+            form.style.display = 'none';
+
+            params.forEach((value, key) => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = key;
+                input.value = value;
+                form.appendChild(input);
+            });
+
+            document.body.appendChild(iframe);
+            document.body.appendChild(form);
+            form.submit();
+
+            setTimeout(() => {
+                form.remove();
+                iframe.remove();
+            }, 8000);
+        };
+
         if (estimateSendForm && estimateSendStatus && estimateSendBtn) {
             estimateSendBtn.addEventListener('click', async event => {
                 event.preventDefault();
@@ -546,7 +576,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const timing = getCheckedValue(timingInputs) || 'nextMonth';
                 const terrainRate = terrainPricePerSqFt[terrain] || terrainPricePerSqFt.flat;
 
-                const payload = new URLSearchParams({
+                const payloadParams = new URLSearchParams({
                     formType: 'estimate',
                     customerName: document.getElementById('estimateCustomerName')?.value || '',
                     customerPhone: document.getElementById('estimateCustomerPhone')?.value || '',
@@ -558,13 +588,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     estimateRange: rangeValue?.textContent || '',
                     estimateSummary: estimateSummary?.textContent || '',
                     estimateNotes: estimateNotes?.textContent || ''
-                }).toString();
+                });
 
                 try {
                     const response = await fetch(ESTIMATE_FORM_ENDPOINT, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                        body: payload
+                        body: payloadParams.toString()
                     });
 
                     if (!response.ok) {
@@ -586,16 +616,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     estimateSendStatus.textContent = 'Success! Your estimate was sent. Please check your email for a copy.';
                     estimateSendStatus.style.color = '#27ae60';
                 } catch (error) {
-                    // Google Apps Script web apps can return redirect/CORS-limited responses even when doPost succeeds.
-                    // Retry with no-cors as a fire-and-forget fallback.
+                    // Apps Script web apps can return redirect/CORS-limited responses even when doPost succeeds.
+                    // Fall back to a plain form POST that avoids fetch response restrictions.
                     try {
-                        await fetch(ESTIMATE_FORM_ENDPOINT, {
-                            method: 'POST',
-                            mode: 'no-cors',
-                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                            body: payload
-                        });
-
+                        submitEstimateByFormPost(payloadParams);
                         estimateSendStatus.textContent = 'Estimate submitted. If you do not receive an email shortly, please contact us directly.';
                         estimateSendStatus.style.color = '#27ae60';
                     } catch (fallbackError) {
