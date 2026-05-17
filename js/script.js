@@ -250,16 +250,17 @@ document.addEventListener('DOMContentLoaded', function() {
         const estimateSendStatus = document.getElementById('estimateSendStatus');
 
         const terrainPricePerSqFt = {
-            flat: { low: 0.0035, high: 0.0040, label: 'Flat' },
-            slight: { low: 0.0040, high: 0.0050, label: 'Slightly sloped' },
-            steep: { low: 0.0065, high: 0.0090, label: 'Steep' }
+            flat: { low: 0.0035, high: 0.0040, label: 'Flat / easy' },
+            mild: { low: 0.0040, high: 0.0050, label: 'Mild slope' },
+            moderate: { low: 0.0050, high: 0.0065, label: 'Moderate slope' },
+            steep: { low: 0.0065, high: 0.0090, label: 'Very steep / difficult' }
         };
 
         const timingMultipliers = {
-            asap: 1.06,
-            nextWeek: 1.03,
-            nextMonth: 1,
-            flexible: 0.97
+            asap: 1.05,         // +5%
+            nextWeek: 1.02,     // +2%
+            nextMonth: 1.00,    // Standard pricing
+            flexible: 0.95      // -5%
         };
 
         const getCheckedValue = inputList => {

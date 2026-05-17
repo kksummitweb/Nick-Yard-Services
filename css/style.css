@@ -2095,6 +2095,21 @@ section {
         margin-top: 0.5rem;
         align-items: stretch;
     }
+
+    .hero-mobile .mobile-estimate-cta {
+        margin-top: 0.25rem;
+        width: 100%;
+        text-align: center;
+        background: #ffffff;
+        color: var(--primary-color);
+        box-shadow: 0 8px 20px rgba(255, 255, 255, 0.28);
+    }
+
+    .hero-mobile .mobile-estimate-cta:hover {
+        background: #f3f7f3;
+        color: var(--primary-color);
+        box-shadow: 0 12px 28px rgba(255, 255, 255, 0.36);
+    }
     
     .hero-mobile .highlight {
         background: rgba(111, 219, 119, 0.08);
