@@ -1600,13 +1600,48 @@ section {
     padding: 0.88rem 1.4rem;
 }
 
+.estimator-actions.final-step-actions {
+    justify-content: flex-start;
+}
+
+.estimator-actions.final-step-actions #estimateBack {
+    min-width: 138px;
+}
+
+
+.estimate-final-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.estimate-final-layout > * {
+    min-width: 0;
+}
+
 .estimate-output {
     margin-top: 0.25rem;
-    background: linear-gradient(135deg, rgba(17, 44, 27, 0.97), rgba(29, 62, 39, 0.98));
-    border: 1px solid rgba(111, 219, 119, 0.42);
+    background: linear-gradient(145deg, rgba(18, 42, 27, 0.96), rgba(21, 53, 31, 0.96));
+    border: 1px solid rgba(111, 219, 119, 0.34);
     border-radius: var(--radius-md);
-    padding: 1.35rem;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    padding: 1.2rem;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 12px 28px rgba(0, 0, 0, 0.28);
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    overflow: hidden;
+    position: relative;
+}
+
+.estimate-output::after {
+    content: '';
+    position: absolute;
+    top: -60px;
+    right: -40px;
+    width: 170px;
+    height: 170px;
+    background: radial-gradient(circle, rgba(182, 229, 176, 0.12), transparent 70%);
+    pointer-events: none;
 }
 
 .estimate-output::before {
@@ -1621,15 +1656,62 @@ section {
 
 .estimate-output h4 {
     color: #ffffff;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.1rem;
+    font-size: 1.45rem;
+    line-height: 1.15;
+}
+
+.estimate-kicker {
+    margin: 0 0 0.35rem;
+    color: #d7ebd8;
+    font-size: 0.8rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.estimate-summary {
+    margin: 0;
+    color: #d8e8d9;
+}
+
+.estimate-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.7rem;
+}
+
+.estimate-metric {
+    border: 1px solid rgba(111, 219, 119, 0.22);
+    border-radius: 10px;
+    padding: 0.65rem 0.75rem;
+    background: rgba(9, 19, 12, 0.46);
+}
+
+.metric-label {
+    display: block;
+    color: #c5dac7;
+    font-size: 0.74rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+}
+
+.metric-value {
+    display: block;
+    color: #ffffff;
+    font-weight: 700;
+    overflow-wrap: anywhere;
 }
 
 .estimate-range {
     font-size: clamp(1.45rem, 4vw, 2.2rem);
     color: var(--hero-accent);
     line-height: 1.1;
-    margin-bottom: 0.6rem;
+    margin: 0;
     overflow-wrap: anywhere;
+    font-weight: 700;
+    letter-spacing: 0.01em;
 }
 
 .estimate-output p,
@@ -1639,7 +1721,82 @@ section {
 }
 
 .estimate-notes {
-    margin-top: 0.8rem;
+    margin-top: 0.2rem;
+}
+
+.estimate-send-form {
+    margin-top: 0.25rem;
+    padding: 1.15rem;
+    border: 1px solid rgba(111, 219, 119, 0.26);
+    border-radius: 14px;
+    background: linear-gradient(160deg, rgba(17, 30, 20, 0.9), rgba(12, 22, 15, 0.9));
+    display: flex;
+    flex-direction: column;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.estimate-send-form h5 {
+    color: #ffffff;
+    margin-bottom: 0.25rem;
+    font-size: 1.05rem;
+    letter-spacing: 0.01em;
+}
+
+.estimate-send-form > p {
+    color: #d4e4d6;
+    margin-bottom: 0.85rem;
+    font-size: 0.92rem;
+}
+
+.estimate-send-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.9rem;
+}
+
+.estimate-send-form .form-group {
+    margin-bottom: 0.85rem;
+}
+
+.estimate-send-form label {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-size: 0.88rem;
+    color: #e8f1e9;
+    font-weight: 600;
+}
+
+.estimate-send-form input {
+    width: 100%;
+    border: 1px solid rgba(111, 219, 119, 0.28);
+    border-radius: 8px;
+    padding: 0.72rem 0.75rem;
+    background: rgba(7, 14, 9, 0.45);
+    color: #f3f9f4;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+}
+
+.estimate-send-form input:focus {
+    outline: none;
+    border-color: rgba(111, 219, 119, 0.72);
+    box-shadow: 0 0 0 2px rgba(111, 219, 119, 0.2);
+}
+
+.estimate-send-status {
+    margin-top: 0.75rem;
+    margin-bottom: 0;
+    font-weight: 600;
+    min-height: 1.2em;
+}
+
+.estimate-send-form .btn {
+    margin-top: 0.2rem;
+    box-shadow: 0 10px 24px rgba(63, 122, 74, 0.35);
+}
+
+.estimate-send-form .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 14px 28px rgba(63, 122, 74, 0.42);
 }
 
 /* ===== Services Detail ===== */
@@ -2026,6 +2183,23 @@ section {
     .estimator-milestones {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 0.5rem;
+    }
+
+    .estimate-send-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .estimate-final-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .estimate-metrics {
+        grid-template-columns: 1fr;
+    }
+
+    .estimate-output,
+    .estimate-send-form {
+        padding: 1rem;
     }
 
     .milestone {

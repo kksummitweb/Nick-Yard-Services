@@ -6,7 +6,7 @@
     <meta name="description" content="Get an instant lawn mowing estimate">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <title>Instant Estimate - Nick Yard Services</title>
-    <link rel="stylesheet" href="css/style.css?v=20260512">
+    <link rel="stylesheet" href="css/style.css?v=20260517">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -160,11 +160,50 @@
                     </section>
 
                     <section class="estimator-step" data-step="4" hidden>
-                        <div class="estimate-output" id="estimateOutput">
-                            <h4>Your Instant Lawn Mowing Estimate</h4>
-                            <p class="estimate-range" id="estimateRange">Add yard size</p>
-                            <p id="estimateSummary">Enter your square footage to see your instant lawn mowing estimate.</p>
-                            <p class="estimate-notes" id="estimateNotes">Base mowing guide uses $0.0036-$0.0047 per sq ft depending on terrain. Final pricing may vary after on-site review.</p>
+                        <div class="estimate-final-layout">
+                            <div class="estimate-output" id="estimateOutput">
+                                <div class="estimate-header">
+                                    <p class="estimate-kicker">Instant Lawn Mowing Range</p>
+                                    <h4>Your Instant Lawn Mowing Estimate</h4>
+                                </div>
+                                <p class="estimate-range" id="estimateRange">Add yard size</p>
+                                <p id="estimateSummary" class="estimate-summary">Enter your square footage to see your instant lawn mowing estimate.</p>
+
+                                <div class="estimate-metrics" aria-label="Estimate details">
+                                    <div class="estimate-metric">
+                                        <span class="metric-label">Lot Size</span>
+                                        <span class="metric-value" id="estimateLotSize">-</span>
+                                    </div>
+                                    <div class="estimate-metric">
+                                        <span class="metric-label">Terrain</span>
+                                        <span class="metric-value" id="estimateTerrain">-</span>
+                                    </div>
+                                    <div class="estimate-metric">
+                                        <span class="metric-label">Start Timing</span>
+                                        <span class="metric-value" id="estimateTiming">-</span>
+                                    </div>
+                                </div>
+
+                                <p class="estimate-notes" id="estimateNotes">Estimate includes terrain and scheduling adjustments. Final pricing may vary after on-site review.</p>
+                            </div>
+
+                            <div id="estimateSendForm" class="estimate-send-form">
+                                <h5>Send This Estimate</h5>
+                                <p>A copy can be sent to you and to the website owner.</p>
+                                <div class="estimate-send-grid">
+                                    <div class="form-group">
+                                        <label for="estimateCustomerName">Your Name *</label>
+                                        <input type="text" id="estimateCustomerName" name="estimateCustomerName" required placeholder="Full name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="estimateCustomerEmail">Your Email *</label>
+                                        <input type="email" id="estimateCustomerEmail" name="estimateCustomerEmail" required placeholder="name@email.com">
+                                    </div>
+                                </div>
+                                <input type="hidden" id="estimateOwnerEmail" value="Nicksyardservicesco@gmail.com">
+                                <button id="estimateSendBtn" class="btn btn-primary btn-full-width">Send Estimate</button>
+                                <p id="estimateSendStatus" class="estimate-send-status" aria-live="polite"></p>
+                            </div>
                         </div>
                     </section>
 
@@ -229,6 +268,6 @@
         </div>
     </footer>
 
-    <script src="js/script.js?v=20260512"></script>
+    <script src="js/script.js?v=20260517"></script>
 </body>
 </html>

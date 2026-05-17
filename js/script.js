@@ -7,6 +7,9 @@
     }
 })();
 
+const CONTACT_FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycby7xg_LdnFY2Ze_ozFfFSDvmw4CNsBYXg5V_QJfUuSgl8KwsDZqEQZIEAitCSzNIb2t/exec';
+const ESTIMATE_FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxq_LyaW0TVyZYY48AXouieUBxoVOrM-V2r1hTGpMB_nvyVQYlSAA0iSYGK_IdFW2Xa/exec';
+
 // Contact form AJAX submission (URL-encoded for Google Apps Script)
 document.addEventListener('DOMContentLoaded', function() {
     const contactForm = document.getElementById('contactForm');
@@ -17,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
             formStatus.textContent = 'Sending...';
             formStatus.style.color = '#333';
             const formData = new URLSearchParams(new FormData(contactForm)).toString();
-            fetch('https://script.google.com/macros/s/AKfycby7xg_LdnFY2Ze_ozFfFSDvmw4CNsBYXg5V_QJfUuSgl8KwsDZqEQZIEAitCSzNIb2t/exec', {
+            fetch(CONTACT_FORM_ENDPOINT, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: formData
@@ -227,14 +230,22 @@ document.addEventListener('DOMContentLoaded', function() {
         const rangeValue = document.getElementById('estimateRange');
         const estimateSummary = document.getElementById('estimateSummary');
         const estimateNotes = document.getElementById('estimateNotes');
+        const estimateLotSize = document.getElementById('estimateLotSize');
+        const estimateTerrain = document.getElementById('estimateTerrain');
+        const estimateTiming = document.getElementById('estimateTiming');
         const squareFeetError = document.getElementById('squareFeetError');
         const resetButton = document.getElementById('startOverEstimate');
         const backButton = document.getElementById('estimateBack');
         const nextButton = document.getElementById('estimateNext');
+        const estimatorActions = document.querySelector('.estimator-actions');
         const progressBar = document.getElementById('estimatorProgressBar');
         const milestoneItems = Array.from(document.querySelectorAll('.milestone'));
         const terrainLearnMore = document.getElementById('terrainLearnMore');
         const terrainHelp = document.getElementById('terrainHelp');
+        const estimateSendForm = document.getElementById('estimateSendForm');
+        const estimateSendBtn = document.getElementById('estimateSendBtn');
+        const estimateSendStatus = document.getElementById('estimateSendStatus');
+        const estimateOwnerEmail = document.getElementById('estimateOwnerEmail');
 
         const terrainPricePerSqFt = {
             flat: { low: 0.0035, high: 0.0040, label: 'Flat' },
@@ -269,11 +280,21 @@ document.addEventListener('DOMContentLoaded', function() {
             const terrain = getCheckedValue(terrainInputs) || 'flat';
             const timing = getCheckedValue(timingInputs) || 'nextMonth';
             const terrainRate = terrainPricePerSqFt[terrain] || terrainPricePerSqFt.flat;
+            const timingLabel = timing === 'asap' ? 'ASAP' : timing === 'nextWeek' ? 'Next week' : timing === 'nextMonth' ? 'Next month' : 'Flexible';
 
             if (squareFeet <= 0) {
                 rangeValue.textContent = 'Add yard size';
                 estimateSummary.textContent = 'Enter your square footage to see your instant lawn mowing estimate.';
-                estimateNotes.textContent = 'Base mowing guide uses $0.0036-$0.0047 per sq ft depending on terrain. Final pricing may vary after on-site review.';
+                estimateNotes.textContent = 'Estimate includes terrain and scheduling adjustments. Final pricing may vary after on-site review.';
+                if (estimateLotSize) {
+                    estimateLotSize.textContent = '-';
+                }
+                if (estimateTerrain) {
+                    estimateTerrain.textContent = '-';
+                }
+                if (estimateTiming) {
+                    estimateTiming.textContent = '-';
+                }
                 return;
             }
 
@@ -282,8 +303,17 @@ document.addEventListener('DOMContentLoaded', function() {
             const highEstimate = squareFeet * terrainRate.high * timingMultiplier;
 
             rangeValue.textContent = `${formatMoney(lowEstimate)} - ${formatMoney(highEstimate)}`;
-            estimateSummary.textContent = `Estimated mowing range for ${Math.round(squareFeet).toLocaleString()} sq ft on ${terrainRate.label.toLowerCase()} terrain with ${timing === 'asap' ? 'ASAP' : timing === 'nextWeek' ? 'next week' : timing === 'nextMonth' ? 'next month' : 'flexible'} start timing.`;
+            estimateSummary.textContent = `Estimated mowing range for ${Math.round(squareFeet).toLocaleString()} sq ft on ${terrainRate.label.toLowerCase()} terrain with ${timingLabel.toLowerCase()} start timing.`;
             estimateNotes.textContent = 'Estimate includes terrain and scheduling adjustments. Final pricing may vary after on-site review.';
+            if (estimateLotSize) {
+                estimateLotSize.textContent = `${Math.round(squareFeet).toLocaleString()} sq ft`;
+            }
+            if (estimateTerrain) {
+                estimateTerrain.textContent = terrainRate.label;
+            }
+            if (estimateTiming) {
+                estimateTiming.textContent = timingLabel;
+            }
         };
 
         const stepHasRequiredValue = stepNumber => {
@@ -341,12 +371,22 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             if (nextButton) {
+                if (currentStep === totalSteps) {
+                    nextButton.style.display = 'none';
+                    if (estimatorActions) {
+                        estimatorActions.classList.add('final-step-actions');
+                    }
+                } else {
+                    nextButton.style.display = 'inline-flex';
+                    if (estimatorActions) {
+                        estimatorActions.classList.remove('final-step-actions');
+                    }
+                }
+
                 if (currentStep < totalSteps - 1) {
                     nextButton.textContent = 'Next';
                 } else if (currentStep === totalSteps - 1) {
                     nextButton.textContent = 'View Estimate';
-                } else {
-                    nextButton.textContent = 'Get a Quote';
                 }
             }
 
@@ -428,9 +468,58 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
+        if (estimateSendForm && estimateSendStatus && estimateSendBtn) {
+            estimateSendBtn.addEventListener('click', async event => {
+                event.preventDefault();
+                calculateEstimate();
+
+                estimateSendStatus.textContent = 'Sending estimate...';
+                estimateSendStatus.style.color = '#d4e4d6';
+
+                const terrain = getCheckedValue(terrainInputs) || 'flat';
+                const timing = getCheckedValue(timingInputs) || 'nextMonth';
+                const terrainRate = terrainPricePerSqFt[terrain] || terrainPricePerSqFt.flat;
+
+                const payload = new URLSearchParams({
+                    formType: 'estimate',
+                    customerName: document.getElementById('estimateCustomerName')?.value || '',
+                    customerEmail: document.getElementById('estimateCustomerEmail')?.value || '',
+                    ownerEmail: estimateOwnerEmail?.value || '',
+                    squareFeet: String(Number(sqftInput.value || 0)),
+                    terrain: terrainRate.label,
+                    startTiming: timing,
+                    estimateRange: rangeValue?.textContent || '',
+                    estimateSummary: estimateSummary?.textContent || '',
+                    estimateNotes: estimateNotes?.textContent || ''
+                }).toString();
+
+                try {
+                    const response = await fetch(ESTIMATE_FORM_ENDPOINT, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: payload
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+
+                    estimateSendStatus.textContent = 'Success! Your estimate was sent. Please check your email for a copy.';
+                    estimateSendStatus.style.color = '#27ae60';
+                } catch (error) {
+                    estimateSendStatus.textContent = 'Sorry, the estimate could not be sent right now. Please try again.';
+                    estimateSendStatus.style.color = '#ffb7b7';
+                }
+            });
+        }
+
         refreshSelectedStyles();
         updateSquareFeetError();
-        showStep(1);
+        // Only call showStep(1) on initial load, not after send, to prevent resetting the wizard step.
+        if (!window._estimatorInitialized) {
+            showStep(1);
+            window._estimatorInitialized = true;
+        }
     }
 });
 
