@@ -8,7 +8,7 @@
 })();
 
 const CONTACT_FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycby7xg_LdnFY2Ze_ozFfFSDvmw4CNsBYXg5V_QJfUuSgl8KwsDZqEQZIEAitCSzNIb2t/exec';
-const ESTIMATE_FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycbz-wC6KlxnOmsuuOOvFwjH8-uIzKUlSrdlSwgagi1dRfXqDF10SP-gZWPK7C7SIAfJe/exec';
+const ESTIMATE_FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzQDZ6PAmGzhwFGFfYXBYL2SzUiH6_Z5o3nixp2E9Hq6ZUHIH6__POb1aw8_yUp9WQN/exec';
 const OWNER_NOTIFICATION_EMAIL = 'nicksyardservices9@gmail.com';
 
 // Contact form AJAX submission (URL-encoded for Google Apps Script)
@@ -491,9 +491,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Step 4: Send step (name/email fields)
         const customerNameInput = document.getElementById('estimateCustomerName');
+        const customerPhoneInput = document.getElementById('estimateCustomerPhone');
         const customerEmailInput = document.getElementById('estimateCustomerEmail');
         if (customerNameInput) {
             customerNameInput.addEventListener('keydown', event => {
+                if (event.key === 'Enter' && currentStep === 4) {
+                    event.preventDefault();
+                    if (estimateSendBtn) estimateSendBtn.click();
+                }
+            });
+        }
+        if (customerPhoneInput) {
+            customerPhoneInput.addEventListener('keydown', event => {
                 if (event.key === 'Enter' && currentStep === 4) {
                     event.preventDefault();
                     if (estimateSendBtn) estimateSendBtn.click();
@@ -519,6 +528,15 @@ document.addEventListener('DOMContentLoaded', function() {
         if (estimateSendForm && estimateSendStatus && estimateSendBtn) {
             estimateSendBtn.addEventListener('click', async event => {
                 event.preventDefault();
+
+                const requiredEstimateInputs = [customerNameInput, customerPhoneInput, customerEmailInput].filter(Boolean);
+                const firstInvalidInput = requiredEstimateInputs.find(input => !input.checkValidity());
+                if (firstInvalidInput) {
+                    firstInvalidInput.reportValidity();
+                    firstInvalidInput.focus();
+                    return;
+                }
+
                 calculateEstimate();
 
                 estimateSendStatus.textContent = 'Sending estimate...';
@@ -531,6 +549,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const payload = new URLSearchParams({
                     formType: 'estimate',
                     customerName: document.getElementById('estimateCustomerName')?.value || '',
+                    customerPhone: document.getElementById('estimateCustomerPhone')?.value || '',
                     customerEmail: document.getElementById('estimateCustomerEmail')?.value || '',
                     ownerEmail: OWNER_NOTIFICATION_EMAIL,
                     squareFeet: String(Number(sqftInput.value || 0)),
@@ -567,8 +586,22 @@ document.addEventListener('DOMContentLoaded', function() {
                     estimateSendStatus.textContent = 'Success! Your estimate was sent. Please check your email for a copy.';
                     estimateSendStatus.style.color = '#27ae60';
                 } catch (error) {
-                    estimateSendStatus.textContent = `Sorry, the estimate could not be sent right now. ${error.message || 'Please try again.'}`;
-                    estimateSendStatus.style.color = '#ffb7b7';
+                    // Google Apps Script web apps can return redirect/CORS-limited responses even when doPost succeeds.
+                    // Retry with no-cors as a fire-and-forget fallback.
+                    try {
+                        await fetch(ESTIMATE_FORM_ENDPOINT, {
+                            method: 'POST',
+                            mode: 'no-cors',
+                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                            body: payload
+                        });
+
+                        estimateSendStatus.textContent = 'Estimate submitted. If you do not receive an email shortly, please contact us directly.';
+                        estimateSendStatus.style.color = '#27ae60';
+                    } catch (fallbackError) {
+                        estimateSendStatus.textContent = `Sorry, the estimate could not be sent right now. ${error.message || 'Please try again.'}`;
+                        estimateSendStatus.style.color = '#ffb7b7';
+                    }
                 }
             });
         }
