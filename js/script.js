@@ -7,8 +7,8 @@
     }
 })();
 
-const CONTACT_FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycby7xg_LdnFY2Ze_ozFfFSDvmw4CNsBYXg5V_QJfUuSgl8KwsDZqEQZIEAitCSzNIb2t/exec';
-const ESTIMATE_FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzQDZ6PAmGzhwFGFfYXBYL2SzUiH6_Z5o3nixp2E9Hq6ZUHIH6__POb1aw8_yUp9WQN/exec';
+const CONTACT_FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzJg_vDDLiyR_zf3GmIvD0xWQFGflTq9g3BNysWH9GIqvuf2AvFRpRWYK8gzmKPATa5/exec';
+const ESTIMATE_FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzJg_vDDLiyR_zf3GmIvD0xWQFGflTq9g3BNysWH9GIqvuf2AvFRpRWYK8gzmKPATa5/exec';
 const OWNER_NOTIFICATION_EMAIL = 'nicksyardservices9@gmail.com';
 
 // Contact form AJAX submission (URL-encoded for Google Apps Script)
@@ -493,6 +493,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const customerNameInput = document.getElementById('estimateCustomerName');
         const customerPhoneInput = document.getElementById('estimateCustomerPhone');
         const customerEmailInput = document.getElementById('estimateCustomerEmail');
+        const customerAddressInput = document.getElementById('estimateCustomerAddress');
         if (customerNameInput) {
             customerNameInput.addEventListener('keydown', event => {
                 if (event.key === 'Enter' && currentStep === 4) {
@@ -559,7 +560,7 @@ document.addEventListener('DOMContentLoaded', function() {
             estimateSendBtn.addEventListener('click', async event => {
                 event.preventDefault();
 
-                const requiredEstimateInputs = [customerNameInput, customerPhoneInput, customerEmailInput].filter(Boolean);
+                const requiredEstimateInputs = [customerNameInput, customerPhoneInput, customerEmailInput, customerAddressInput].filter(Boolean);
                 const firstInvalidInput = requiredEstimateInputs.find(input => !input.checkValidity());
                 if (firstInvalidInput) {
                     firstInvalidInput.reportValidity();
@@ -581,6 +582,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     customerName: document.getElementById('estimateCustomerName')?.value || '',
                     customerPhone: document.getElementById('estimateCustomerPhone')?.value || '',
                     customerEmail: document.getElementById('estimateCustomerEmail')?.value || '',
+                    customerAddress: document.getElementById('estimateCustomerAddress')?.value || '',
                     ownerEmail: OWNER_NOTIFICATION_EMAIL,
                     squareFeet: String(Number(sqftInput.value || 0)),
                     terrain: terrainRate.label,
