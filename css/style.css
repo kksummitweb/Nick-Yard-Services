@@ -1314,6 +1314,47 @@ section {
     margin: 0 auto;
 }
 
+.service-area-pricing-notice {
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(111, 219, 119, 0.24);
+    border-radius: 20px;
+    background: linear-gradient(145deg, rgba(18, 36, 24, 0.9), rgba(14, 28, 19, 0.86));
+    padding: 1.25rem;
+    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.34);
+}
+
+.service-area-pricing-copy {
+    margin-bottom: 0.9rem;
+}
+
+.service-area-pricing-copy h2 {
+    color: var(--hero-accent);
+    font-size: clamp(1.4rem, 2.8vw, 1.9rem);
+    line-height: 1.15;
+    margin-bottom: 0.35rem;
+}
+
+.service-area-pricing-copy p {
+    color: #d8e8d9;
+    margin: 0;
+}
+
+.service-area-pricing-image-wrap {
+    margin: 0;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(111, 219, 119, 0.26);
+    background: rgba(0, 0, 0, 0.28);
+}
+
+.service-area-pricing-image {
+    width: 100%;
+    display: block;
+}
+
 .estimator-shell {
     background:
         radial-gradient(circle at 92% 6%, rgba(111, 219, 119, 0.14), transparent 44%),
@@ -2237,6 +2278,11 @@ section {
 
     .estimator-shell {
         padding: 1.2rem;
+    }
+
+    .service-area-pricing-notice {
+        padding: 1rem;
+        border-radius: 16px;
     }
 
     .estimator-actions {
