@@ -7,7 +7,7 @@
     }
 })();
 
-const CONTACT_FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzJg_vDDLiyR_zf3GmIvD0xWQFGflTq9g3BNysWH9GIqvuf2AvFRpRWYK8gzmKPATa5/exec';
+const CONTACT_FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzpFgyZehd-vZfjAY2iB1YqrpzpWl1ZCTpX_ZahrVVfL9Gl4klx1GRrvt6egRlcCdPe/exec';
 const ESTIMATE_FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycbylgauxjtz0WN51Vx17PD0E1bvG51ySSMMp1LlUuppVv8Sgu6ot_hh71OkXNl5xO8g/exec';
 const OWNER_NOTIFICATION_EMAIL = 'nicksyardservices9@gmail.com';
 

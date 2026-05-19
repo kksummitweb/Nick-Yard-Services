@@ -1415,6 +1415,13 @@ section {
     text-transform: uppercase;
 }
 
+.estimator-starting-note {
+    margin: -0.35rem 0 1.05rem;
+    color: #d4e4d6;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
 .estimator-progress {
     height: 10px;
     width: 100%;
