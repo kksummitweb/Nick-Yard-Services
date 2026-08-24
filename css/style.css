@@ -194,7 +194,7 @@ img {
 
 .nav-menu {
     display: flex;
-    gap: 2.5rem;
+    gap: clamp(1.25rem, 2.2vw, 2.5rem);
     flex: 1;
     justify-content: center;
 }
@@ -207,6 +207,7 @@ img {
     text-transform: uppercase;
     letter-spacing: 0.1em;
     font-size: 0.8rem;
+    white-space: nowrap;
     transition: color 0.3s ease;
 }
 
@@ -239,7 +240,7 @@ img {
 }
 
 .nav-cta {
-    padding: 0.8rem 2rem;
+    padding: 0.8rem clamp(1.1rem, 1.6vw, 2rem);
     background: linear-gradient(135deg, var(--secondary-color), #4a8a54);
     color: white;
     border-radius: 6px;
@@ -247,6 +248,7 @@ img {
     letter-spacing: 0.05em;
     text-transform: uppercase;
     font-size: 0.8rem;
+    white-space: nowrap;
     box-shadow: 0 8px 20px rgba(63, 122, 74, 0.3);
     transition: all 0.3s ease;
 }
