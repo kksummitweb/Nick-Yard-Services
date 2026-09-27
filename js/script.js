@@ -8,6 +8,7 @@
 })();
 
 const CONTACT_FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzpFgyZehd-vZfjAY2iB1YqrpzpWl1ZCTpX_ZahrVVfL9Gl4klx1GRrvt6egRlcCdPe/exec';
+const SNOW_FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyZL8QdRczaIKkkoUyFd149db9amrD5wEiEY4fQO2Dx-xid8B6vyVWnOXD62Xttc4ad/exec';
 const ESTIMATE_FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycbylgauxjtz0WN51Vx17PD0E1bvG51ySSMMp1LlUuppVv8Sgu6ot_hh71OkXNl5xO8g/exec';
 const OWNER_NOTIFICATION_EMAIL = 'nicksyardservices9@gmail.com';
 const SNOW_SPOTS_TOTAL = 20;
@@ -1011,37 +1012,39 @@ document.addEventListener('DOMContentLoaded', function() {
                 address: document.getElementById('snowCustomerAddress')?.value || '',
                 drivewayTier: snowTierId?.value || snowTierSelect?.value || '',
                 drivewayTierLabel: snowTierLabel?.value || '',
+                signature: document.getElementById('snowSignature')?.value || '',
+                oregonConfirm: document.getElementById('snowOregonConfirm')?.checked ? 'Yes' : 'No',
+                termsAck: document.getElementById('snowTermsAck')?.checked ? 'Yes' : 'No',
+                contractAck: document.getElementById('snowContractAck')?.checked ? 'Yes' : 'No',
+                cardAck: document.getElementById('snowCardAck')?.checked ? 'Yes' : 'No',
                 message: messageLines.join('\n'),
                 ownerEmail: OWNER_NOTIFICATION_EMAIL
             });
 
-            fetch(CONTACT_FORM_ENDPOINT, {
+            fetch(SNOW_FORM_ENDPOINT, {
                 method: 'POST',
+                mode: 'no-cors',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: formPayload.toString()
             })
-                .then(response => {
-                    if (response.ok) {
-                        if (snowSignupStatus) {
-                            snowSignupStatus.textContent = 'Thank you! Your snow removal signup request was submitted. We will contact you to verify your property and complete your seasonal agreement.';
-                            snowSignupStatus.style.color = 'green';
-                        }
-                        snowSignupForm.reset();
-                        if (snowTierId) snowTierId.value = '';
-                        if (snowTierLabel) snowTierLabel.value = '';
-                        highlightTierCard('');
-                        updateTierDisplay('', true);
-                        showSnowStep(1);
-                        const prevRemaining = typeof window.__snowSpotsRemaining === 'number'
-                            ? window.__snowSpotsRemaining
-                            : SNOW_SPOTS_TOTAL;
-                        applySnowSpotsAvailability({
-                            total: SNOW_SPOTS_TOTAL,
-                            remaining: Math.max(0, prevRemaining - 1)
-                        });
-                    } else {
-                        throw new Error('Network response was not ok');
+                .then(() => {
+                    if (snowSignupStatus) {
+                        snowSignupStatus.textContent = 'Thank you! Your signup request was sent. We will contact you to verify your property and complete your seasonal agreement.';
+                        snowSignupStatus.style.color = 'green';
                     }
+                    snowSignupForm.reset();
+                    if (snowTierId) snowTierId.value = '';
+                    if (snowTierLabel) snowTierLabel.value = '';
+                    highlightTierCard('');
+                    updateTierDisplay('', true);
+                    showSnowStep(1);
+                    const prevRemaining = typeof window.__snowSpotsRemaining === 'number'
+                        ? window.__snowSpotsRemaining
+                        : SNOW_SPOTS_TOTAL;
+                    applySnowSpotsAvailability({
+                        total: SNOW_SPOTS_TOTAL,
+                        remaining: Math.max(0, prevRemaining - 1)
+                    });
                 })
                 .catch(() => {
                     if (snowSignupStatus) {
