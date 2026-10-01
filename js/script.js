@@ -43,7 +43,7 @@ function applySnowSpotsAvailability(data) {
         }
         if (noteEl) {
             noteEl.textContent = isFull
-                ? 'All 20 spots are filled. Call (608) 886-5468 to ask about a waitlist.'
+                ? `All ${total} spots are filled. Call (608) 886-5468 to ask about a waitlist.`
                 : 'Registration closes November 1, 2026. Spots are first come, first served.';
         }
     });
@@ -55,12 +55,17 @@ function applySnowSpotsAvailability(data) {
 
     const snowNext = document.getElementById('snowSignupNext');
     const snowSubmit = document.getElementById('snowSignupSubmit');
+    const snowSignupStatus = document.getElementById('snowSignupStatus');
     if (isFull) {
         if (snowNext) {
             snowNext.disabled = true;
         }
         if (snowSubmit) {
             snowSubmit.disabled = true;
+        }
+        if (snowSignupStatus) {
+            snowSignupStatus.textContent = `Sorry, no more slots left! All ${total} snow removal spots for this season are filled. Call (608) 886-5468 to ask about a waitlist.`;
+            snowSignupStatus.style.color = 'red';
         }
     } else {
         if (snowNext) {
