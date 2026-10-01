@@ -14,6 +14,95 @@ const OWNER_NOTIFICATION_EMAIL = 'nicksyardservices9@gmail.com';
 const SNOW_SPOTS_TOTAL = 20;
 const SNOW_SPOTS_JSON_URL = 'data/snow-spots.json';
 
+// Lightweight canvas snowfall effect for the snow removal landing page.
+(() => {
+    const canvas = document.getElementById('snowfallCanvas');
+    if (!canvas || !canvas.getContext) {
+        return;
+    }
+
+    const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+        return;
+    }
+
+    const ctx = canvas.getContext('2d');
+    let width = 0;
+    let height = 0;
+    let flakes = [];
+    let animationFrame = null;
+
+    const densityForWidth = w => Math.min(140, Math.max(40, Math.round(w / 12)));
+
+    const createFlake = () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        radius: Math.random() * 2.6 + 1,
+        speedY: Math.random() * 0.8 + 0.4,
+        drift: Math.random() * 0.6 - 0.3,
+        sway: Math.random() * Math.PI * 2,
+        swaySpeed: Math.random() * 0.015 + 0.005,
+        opacity: Math.random() * 0.5 + 0.4
+    });
+
+    const resize = () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+        const targetCount = densityForWidth(width);
+        if (flakes.length > targetCount) {
+            flakes.length = targetCount;
+        } else {
+            while (flakes.length < targetCount) {
+                flakes.push(createFlake());
+            }
+        }
+    };
+
+    const draw = () => {
+        ctx.clearRect(0, 0, width, height);
+        ctx.fillStyle = '#ffffff';
+        flakes.forEach(flake => {
+            flake.sway += flake.swaySpeed;
+            flake.y += flake.speedY;
+            flake.x += flake.drift + Math.sin(flake.sway) * 0.4;
+
+            if (flake.y > height + 10) {
+                flake.y = -10;
+                flake.x = Math.random() * width;
+            }
+            if (flake.x > width + 10) {
+                flake.x = -10;
+            } else if (flake.x < -10) {
+                flake.x = width + 10;
+            }
+
+            ctx.globalAlpha = flake.opacity;
+            ctx.beginPath();
+            ctx.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2);
+            ctx.fill();
+        });
+        ctx.globalAlpha = 1;
+        animationFrame = requestAnimationFrame(draw);
+    };
+
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(resize, 150);
+    });
+
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            cancelAnimationFrame(animationFrame);
+        } else {
+            animationFrame = requestAnimationFrame(draw);
+        }
+    });
+
+    resize();
+    animationFrame = requestAnimationFrame(draw);
+})();
+
 /**
  * Optional live count: add doGet to your Google Apps Script (same project as the contact form):
  * if (e.parameter.action === 'snowSpots') return JSON { total: 20, remaining: ... } counting snow_signup rows.

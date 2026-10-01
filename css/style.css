@@ -2822,6 +2822,22 @@ section {
     border-bottom-color: rgba(130, 207, 228, 0.3);
 }
 
+.snowfall-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1500;
+    opacity: 0.85;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .snowfall-canvas {
+        display: none;
+    }
+}
+
 .snow-page .header {
     border-bottom-color: rgba(130, 207, 228, 0.2);
 }
