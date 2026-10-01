@@ -1,8 +1,11 @@
 /**
- * Replace the existing doPost(e) with this handler.
- * It uses CONFIG.EMAIL, escapeHtml(), and jsonResponse() from the existing script.
+ * DEPRECATED: superseded by apps-script/Code.gs, which is a complete,
+ * self-contained web app (doGet + doPost, Sheets logging, owner email
+ * notifications, and server-side enforcement of the 20 snow-spot cap).
+ * Use apps-script/Code.gs for new deployments; this file is kept only for
+ * reference and is not wired up to anything.
  */
-function doPost(e) {
+function doPost_deprecated(e) {
   try {
     var params = e && e.parameter ? e.parameter : {};
     var isSnowSignup = params.formType === "snow_signup";

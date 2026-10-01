@@ -6,7 +6,7 @@
     <meta name="description" content="Seasonal snow blowing and snow removal for residential driveways in the Village of Oregon, Wisconsin. Transparent per-push pricing by driveway size. Registration ends November 1, 2026 — limited to 20 spots.">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <title>Snow Removal &amp; Snow Blowing | Village of Oregon, WI | Nick Yard Services</title>
-    <link rel="stylesheet" href="css/style.css?v=20260927-snow18">
+    <link rel="stylesheet" href="css/style.css?v=20260929-snow26">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -88,8 +88,8 @@
                                 <span class="snow-hero-stat-label">Auto service trigger</span>
                             </li>
                             <li>
-                                <span class="snow-hero-stat-value">~3&quot;</span>
-                                <span class="snow-hero-stat-label">Follow-up intervals</span>
+                                <span class="snow-hero-stat-value">2-stage</span>
+                                <span class="snow-hero-stat-label">Large-storm clearing plan</span>
                             </li>
                             <li>
                                 <span class="snow-hero-stat-value">Nov 1</span>
@@ -208,6 +208,8 @@
                     </div>
 
                     <p class="snow-size-hint"><i class="fas fa-ruler-combined" aria-hidden="true"></i> Measure length × width of paved area, or match the car-count label. Sizes between tiers are confirmed during property review.</p>
+                    <p class="snow-size-hint"><i class="fas fa-house" aria-hidden="true"></i> Corner lots add <strong>$15 per snow service</strong> to the normal driveway price to account for additional sidewalk clearing.</p>
+                    <p class="snow-size-hint"><i class="fas fa-temperature-low" aria-hidden="true"></i> <strong>Salt &amp; Ice Treatment — $20 per application.</strong> Available as an add-on when signing up for your snow removal plan. Must be selected before the snow season begins; it cannot be added once the season is underway.</p>
                 </div>
 
                 <aside class="snow-pricing-disclaimer reveal-on-scroll" aria-labelledby="pricing-disclaimer-heading">
@@ -238,12 +240,12 @@
                     <article class="snow-essential reveal-on-scroll">
                         <span class="snow-essential-num">3</span>
                         <h3>We clear when snow qualifies</h3>
-                        <p>Service starts at <strong>2 inches</strong>, with additional visits at roughly <strong>every 3 inches</strong> during ongoing accumulation.</p>
+                        <p>The <strong>2-inch accumulation trigger starts service</strong>. In a larger storm, we may clear in the morning so customers can get out, then return after snowfall ends for final clearing.</p>
                     </article>
                     <article class="snow-essential reveal-on-scroll">
                         <i class="fas fa-temperature-low snow-essential-icon" aria-hidden="true"></i>
-                        <h3>Pre-treatment &amp; ice control</h3>
-                        <p>Pre-salting may be required when conditions warrant—it is part of the service, not optional.</p>
+                        <h3>Salt &amp; ice treatment</h3>
+                        <p>Optional add-on for $20 per application. Select it when signing up before the season begins; it cannot be added once the season is underway.</p>
                     </article>
                     <article class="snow-essential reveal-on-scroll">
                         <i class="fas fa-snowflake snow-essential-icon" aria-hidden="true"></i>
@@ -312,6 +314,20 @@
                                         <option value="custom">2,500+ sq. ft. — Custom pricing</option>
                                     </select>
                                 </div>
+                                <div class="form-group">
+                                    <label for="snowSaltTreatment">Salt &amp; Ice Treatment — $20 per application</label>
+                                    <div class="form-group-checkbox-row">
+                                        <input type="checkbox" id="snowSaltTreatment" name="saltTreatment" value="Yes" class="form-checkbox">
+                                        <span class="form-checkbox-caption">Add salt and ice treatment to my plan. I understand it must be selected before the snow season begins and cannot be added once the season is underway.</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="snowCornerLot">Corner-lot service — $15 additional per snow service</label>
+                                    <div class="form-group-checkbox-row">
+                                        <input type="checkbox" id="snowCornerLot" name="cornerLot" value="Yes" class="form-checkbox">
+                                        <span class="form-checkbox-caption">My property is a corner lot. Add $15 per service to the normal driveway price for the additional sidewalk clearing.</span>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="snow-signup-step" data-step="2" hidden>
@@ -348,8 +364,9 @@
                                 <div class="snow-terms-readout" id="snowTermsSummary" aria-label="Service terms summary">
                                     <ul class="snow-terms-readout-list">
                                         <li>Seasonal snow removal with per-push pricing based on your verified driveway category.</li>
-                                        <li>Service begins at a <strong>2″</strong> snowfall; follow-up visits at roughly every <strong>3″</strong> thereafter.</li>
-                                        <li>Pre-treatment and ice control when conditions warrant.</li>
+                                        <li>The <strong>2-inch accumulation trigger starts service</strong>. Larger storms may require an initial clearing and a final clearing after snowfall ends. Timing depends on snowfall rate, weather and road conditions, and the number of properties being serviced.</li>
+                                        <li>Corner lots add <strong>$15 per snow service</strong> to the normal driveway price for additional sidewalk clearing.</li>
+                                        <li>Optional Salt &amp; Ice Treatment is $20 per application. It must be selected at signup before the season begins and cannot be added once the season is underway.</li>
                                         <li>Signed seasonal agreement and valid card on file required before service begins.</li>
                                         <li>Registration closes <strong>November 1, 2026</strong>. Season is limited to <strong>20 properties</strong>.</li>
                                     </ul>
@@ -446,16 +463,56 @@
                         <p>Village of Oregon, Wisconsin only. We do not accept properties outside the village.</p>
                     </details>
                     <details class="snow-faq-item reveal-on-scroll">
+                        <summary>What is the 2-inch snow trigger?</summary>
+                        <p>Service is triggered once approximately 2 inches of snow has accumulated. This is the threshold that starts service; it does not guarantee an exact arrival time.</p>
+                    </details>
+                    <details class="snow-faq-item reveal-on-scroll">
                         <summary>How do I pick the right driveway size?</summary>
                         <p>Measure length × width of your paved driveway, or use the car-count labels in the pricing table. We confirm the correct tier during property review.</p>
                     </details>
                     <details class="snow-faq-item reveal-on-scroll">
-                        <summary>What is the snow trigger and visit schedule?</summary>
-                        <p>First service at 2 inches of snowfall, then approximately every additional 3 inches during the same event or season—not one visit for the whole winter.</p>
+                        <summary>What is included in driveway snow removal?</summary>
+                        <p>Driveway snow blowing is included. Sidewalks, walkways, and other areas are included only when specified in your service agreement.</p>
                     </details>
                     <details class="snow-faq-item reveal-on-scroll">
-                        <summary>Is pre-treatment required?</summary>
-                        <p>Yes, when conditions warrant. It is part of our snow and ice management process included in seasonal service.</p>
+                        <summary>Are sidewalks included, and how much do they cost?</summary>
+                        <p>Sidewalk clearing must be confirmed in your agreement; there is no separate standard sidewalk price listed. Corner lots add $15 per snow service to the normal driveway price to account for additional sidewalk clearing.</p>
+                    </details>
+                    <details class="snow-faq-item reveal-on-scroll">
+                        <summary>How does corner-lot pricing work?</summary>
+                        <p>Check the corner-lot option when signing up. It adds $15 per snow service on top of your normal driveway price for the additional sidewalk clearing.</p>
+                    </details>
+                    <details class="snow-faq-item reveal-on-scroll">
+                        <summary>What happens during a major snowstorm, such as 12 inches?</summary>
+                        <p>The approximately 2-inch accumulation trigger starts service. If snow continues, we may prioritize an early-morning driveway clearing so customers can get out, then return after snowfall ends for final clearing. We generally do not repeatedly clear while snow is still falling.</p>
+                    </details>
+                    <details class="snow-faq-item reveal-on-scroll">
+                        <summary>When will you come if snow falls overnight?</summary>
+                        <p>If the 2-inch trigger is reached overnight, we aim to clear driveways by approximately 7:00 AM when conditions and timing allow. Exact timing depends on snowfall rate, weather and road conditions, and the number of properties being serviced.</p>
+                    </details>
+                    <details class="snow-faq-item reveal-on-scroll">
+                        <summary>Do you come multiple times during one storm?</summary>
+                        <p>For larger storms, the plan is generally an early-morning clearing when needed, followed by a final clearing after the storm ends, rather than repeatedly clearing while snow is falling.</p>
+                    </details>
+                    <details class="snow-faq-item reveal-on-scroll">
+                        <summary>What if snow continues after the driveway is cleared?</summary>
+                        <p>In a larger ongoing storm, an early clearing may be followed by a return visit after snowfall ends for the final clearing. Additional service timing depends on conditions and the route schedule.</p>
+                    </details>
+                    <details class="snow-faq-item reveal-on-scroll">
+                        <summary>How exact is the service timing?</summary>
+                        <p>Timing depends on snowfall rate, weather conditions, road conditions, and the number of properties being serviced. For overnight snow, we aim for approximately 7:00 AM when conditions and timing allow, but this is not a guaranteed arrival time.</p>
+                    </details>
+                    <details class="snow-faq-item reveal-on-scroll">
+                        <summary>How do contracts and pricing work?</summary>
+                        <p>Driveway pricing is per push based on the verified driveway size. Corner lots add $15 per service, and salt and ice treatment is an optional $20 per application. A signed seasonal agreement and valid card on file are required before service begins; Nick will follow up to finalize the agreement.</p>
+                    </details>
+                    <details class="snow-faq-item reveal-on-scroll">
+                        <summary>How will I know my service has been completed?</summary>
+                        <p>Service is performed when the snowfall trigger and route timing call for it. For confirmation or a service update, contact Nick at <a href="tel:+16088865468">(608) 886-5468</a>.</p>
+                    </details>
+                    <details class="snow-faq-item reveal-on-scroll">
+                        <summary>Can I add salt and ice treatment later?</summary>
+                        <p>Salt &amp; Ice Treatment is an optional $20-per-application add-on. You must select it when signing up, before the snow season begins; it cannot be added once the season is underway.</p>
                     </details>
                     <details class="snow-faq-item reveal-on-scroll">
                         <summary>Do I need a contract and card on file?</summary>
@@ -532,6 +589,6 @@
         </div>
     </footer>
 
-    <script src="js/script.js?v=20260927-snow18"></script>
+    <script src="js/script.js?v=20261001-snow20"></script>
 </body>
 </html>

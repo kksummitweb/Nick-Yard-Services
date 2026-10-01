@@ -7,9 +7,9 @@
     }
 })();
 
-const CONTACT_FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzpFgyZehd-vZfjAY2iB1YqrpzpWl1ZCTpX_ZahrVVfL9Gl4klx1GRrvt6egRlcCdPe/exec';
-const SNOW_FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyZL8QdRczaIKkkoUyFd149db9amrD5wEiEY4fQO2Dx-xid8B6vyVWnOXD62Xttc4ad/exec';
-const ESTIMATE_FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycbylgauxjtz0WN51Vx17PD0E1bvG51ySSMMp1LlUuppVv8Sgu6ot_hh71OkXNl5xO8g/exec';
+const CONTACT_FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwXf8_y02lRwsqxkMK4j8BIOZzULvjl-NiIQXtOcDZkxyBoKsUXOfFl9Jd1ok2kDf1N/exec';
+const SNOW_FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwXf8_y02lRwsqxkMK4j8BIOZzULvjl-NiIQXtOcDZkxyBoKsUXOfFl9Jd1ok2kDf1N/exec';
+const ESTIMATE_FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwXf8_y02lRwsqxkMK4j8BIOZzULvjl-NiIQXtOcDZkxyBoKsUXOfFl9Jd1ok2kDf1N/exec';
 const OWNER_NOTIFICATION_EMAIL = 'nicksyardservices9@gmail.com';
 const SNOW_SPOTS_TOTAL = 20;
 const SNOW_SPOTS_JSON_URL = 'data/snow-spots.json';
@@ -999,7 +999,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const messageLines = [
                 'Snow Removal Seasonal Signup Request',
                 `Driveway tier: ${snowTierLabel?.value || snowTierSelect?.value || 'Not specified'}`,
-                'Acknowledgments: seasonal agreement, 2" trigger + ~3" intervals, pre-treatment, card on file, Village of Oregon only.',
+                `Salt & Ice Treatment: ${document.getElementById('snowSaltTreatment')?.checked ? '$20 per application (selected)' : 'Not selected'}`,
+                `Corner lot: ${document.getElementById('snowCornerLot')?.checked ? '$15 additional per snow service' : 'No'}`,
+                'Acknowledgments: seasonal agreement, 2-inch service trigger, possible initial and final clearing during larger storms, card on file, Village of Oregon only.',
                 `Electronic signature: ${document.getElementById('snowSignature')?.value || ''}`
             ];
 
@@ -1012,6 +1014,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 address: document.getElementById('snowCustomerAddress')?.value || '',
                 drivewayTier: snowTierId?.value || snowTierSelect?.value || '',
                 drivewayTierLabel: snowTierLabel?.value || '',
+                saltTreatment: document.getElementById('snowSaltTreatment')?.checked ? 'Yes' : 'No',
+                cornerLot: document.getElementById('snowCornerLot')?.checked ? 'Yes' : 'No',
                 signature: document.getElementById('snowSignature')?.value || '',
                 oregonConfirm: document.getElementById('snowOregonConfirm')?.checked ? 'Yes' : 'No',
                 termsAck: document.getElementById('snowTermsAck')?.checked ? 'Yes' : 'No',
@@ -1023,13 +1027,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
             fetch(SNOW_FORM_ENDPOINT, {
                 method: 'POST',
-                mode: 'no-cors',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: formPayload.toString()
             })
-                .then(() => {
+                .then(async response => {
+                    let result = null;
+                    try {
+                        result = await response.json();
+                    } catch (parseError) {
+                        // Apps Script sometimes returns a non-JSON redirect body even on success.
+                        result = response.ok ? { result: 'success' } : null;
+                    }
+
+                    if (!result || result.result !== 'success') {
+                        const serverMessage = result && result.message ? result.message : 'Please try again later or call (608) 886-5468.';
+                        throw new Error(serverMessage);
+                    }
+
                     if (snowSignupStatus) {
-                        snowSignupStatus.textContent = 'Thank you! Your signup request was sent. We will contact you to verify your property and complete your seasonal agreement.';
+                        snowSignupStatus.textContent = 'Thank you for submitting your snow removal request! Nick will be in contact with you shortly to follow up, answer any questions, and finalize the contract details.';
                         snowSignupStatus.style.color = 'green';
                     }
                     snowSignupForm.reset();
@@ -1046,11 +1062,12 @@ document.addEventListener('DOMContentLoaded', function() {
                         remaining: Math.max(0, prevRemaining - 1)
                     });
                 })
-                .catch(() => {
+                .catch(error => {
                     if (snowSignupStatus) {
-                        snowSignupStatus.textContent = 'Sorry, there was an error sending your request. Please try again later or call (608) 886-5468.';
+                        snowSignupStatus.textContent = `Sorry, your request could not be submitted. ${error.message || 'Please try again later or call (608) 886-5468.'}`;
                         snowSignupStatus.style.color = 'red';
                     }
+                    refreshSnowSpotsAvailability();
                 });
         });
 
