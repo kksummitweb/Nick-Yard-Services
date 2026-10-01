@@ -2832,6 +2832,18 @@ section {
     opacity: 0.85;
 }
 
+.snow-page::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1499;
+    background:
+        radial-gradient(ellipse at top left, rgba(169, 220, 232, 0.16), transparent 45%),
+        radial-gradient(ellipse at top right, rgba(169, 220, 232, 0.16), transparent 45%),
+        radial-gradient(ellipse at bottom, rgba(10, 24, 33, 0.35), transparent 55%);
+}
+
 @media (prefers-reduced-motion: reduce) {
     .snowfall-canvas {
         display: none;

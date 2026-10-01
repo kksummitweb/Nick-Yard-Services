@@ -14,7 +14,7 @@ const OWNER_NOTIFICATION_EMAIL = 'nicksyardservices9@gmail.com';
 const SNOW_SPOTS_TOTAL = 20;
 const SNOW_SPOTS_JSON_URL = 'data/snow-spots.json';
 
-// Lightweight canvas snowfall effect for the snow removal landing page.
+// Layered, wind-gusting, cursor-reactive canvas snowfall for the snow removal landing page.
 (() => {
     const canvas = document.getElementById('snowfallCanvas');
     if (!canvas || !canvas.getContext) {
@@ -31,19 +31,28 @@ const SNOW_SPOTS_JSON_URL = 'data/snow-spots.json';
     let height = 0;
     let flakes = [];
     let animationFrame = null;
+    let elapsed = 0;
+    const pointer = { x: -9999, y: -9999, active: false };
 
-    const densityForWidth = w => Math.min(140, Math.max(40, Math.round(w / 12)));
+    const densityForWidth = w => Math.min(160, Math.max(50, Math.round(w / 11)));
 
-    const createFlake = () => ({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        radius: Math.random() * 2.6 + 1,
-        speedY: Math.random() * 0.8 + 0.4,
-        drift: Math.random() * 0.6 - 0.3,
-        sway: Math.random() * Math.PI * 2,
-        swaySpeed: Math.random() * 0.015 + 0.005,
-        opacity: Math.random() * 0.5 + 0.4
-    });
+    // Roughly a third of flakes are "front" layer: bigger, faster, and reactive to the cursor.
+    const createFlake = () => {
+        const isFront = Math.random() < 0.32;
+        return {
+            x: Math.random() * width,
+            y: Math.random() * height,
+            radius: isFront ? Math.random() * 2.2 + 2.2 : Math.random() * 1.8 + 0.8,
+            speedY: isFront ? Math.random() * 1.1 + 0.9 : Math.random() * 0.6 + 0.3,
+            drift: Math.random() * 0.4 - 0.2,
+            sway: Math.random() * Math.PI * 2,
+            swaySpeed: Math.random() * 0.015 + 0.005,
+            opacity: isFront ? Math.random() * 0.35 + 0.55 : Math.random() * 0.4 + 0.3,
+            isFront,
+            pushX: 0,
+            pushY: 0
+        };
+    };
 
     const resize = () => {
         width = canvas.width = window.innerWidth;
@@ -59,12 +68,34 @@ const SNOW_SPOTS_JSON_URL = 'data/snow-spots.json';
     };
 
     const draw = () => {
+        elapsed += 1;
+        // Slow, layered sine waves approximate gentle, irregular wind gusts.
+        const wind = Math.sin(elapsed * 0.004) * 0.6 + Math.sin(elapsed * 0.0017) * 0.9;
+
         ctx.clearRect(0, 0, width, height);
         ctx.fillStyle = '#ffffff';
+
         flakes.forEach(flake => {
             flake.sway += flake.swaySpeed;
             flake.y += flake.speedY;
-            flake.x += flake.drift + Math.sin(flake.sway) * 0.4;
+            flake.x += flake.drift + wind * (flake.isFront ? 1 : 0.5) + Math.sin(flake.sway) * 0.4;
+
+            if (pointer.active && flake.isFront) {
+                const dx = flake.x - pointer.x;
+                const dy = flake.y - pointer.y;
+                const distSq = dx * dx + dy * dy;
+                const radius = 90;
+                if (distSq < radius * radius) {
+                    const dist = Math.sqrt(distSq) || 1;
+                    const force = (1 - dist / radius) * 2.4;
+                    flake.pushX += (dx / dist) * force;
+                    flake.pushY += (dy / dist) * force;
+                }
+            }
+            flake.x += flake.pushX;
+            flake.y += flake.pushY;
+            flake.pushX *= 0.9;
+            flake.pushY *= 0.9;
 
             if (flake.y > height + 10) {
                 flake.y = -10;
@@ -89,6 +120,16 @@ const SNOW_SPOTS_JSON_URL = 'data/snow-spots.json';
     window.addEventListener('resize', () => {
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(resize, 150);
+    });
+
+    window.addEventListener('pointermove', event => {
+        pointer.x = event.clientX;
+        pointer.y = event.clientY;
+        pointer.active = true;
+    }, { passive: true });
+
+    window.addEventListener('pointerleave', () => {
+        pointer.active = false;
     });
 
     document.addEventListener('visibilitychange', () => {
