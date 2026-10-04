@@ -918,12 +918,11 @@ document.addEventListener('DOMContentLoaded', function() {
         ];
 
         const tierLabels = {
-            '500': '0–500 sq. ft. — $70/push',
-            '1000': '750–1,000 sq. ft. — $85–$100/push',
-            '1500': '1,000–1,500 sq. ft. — $100–$125/push',
-            '2000': '1,500–2,000 sq. ft. — $150/push',
-            '2500': '2,000–2,500 sq. ft. — Custom pricing',
-            custom: '2,500+ sq. ft. — Custom pricing'
+            '1200': 'Small — up to 1,200 sq. ft. — $60 (2–5 inches) / $84 (over 5 inches) per visit',
+            '2250': 'Medium — 1,200–2,250 sq. ft. — $80 (2–5 inches) / $112 (over 5 inches) per visit',
+            '3000': 'Large — 2,250–3,000 sq. ft. — $100 (2–5 inches) / $140 (over 5 inches) per visit',
+            '4000': 'Very Large — 3,000–4,000 sq. ft. — $130 (2–5 inches) / $182 (over 5 inches) per visit',
+            custom: 'Over 4,000 sq. ft. — Custom pricing'
         };
 
         const updateTierDisplay = (label, empty) => {
@@ -1215,4 +1214,3 @@ document.addEventListener('DOMContentLoaded', function() {
         showSnowStep(1);
     }
 });
-

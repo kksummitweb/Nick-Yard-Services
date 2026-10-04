@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Seasonal snow blowing and snow removal for residential driveways in the Village of Oregon, Wisconsin. Transparent per-push pricing by driveway size. Registration ends November 1, 2026 — limited to 20 spots.">
+    <meta name="description" content="Seasonal snow blowing and snow removal for residential driveways in the Village of Oregon, Wisconsin. Transparent per-visit pricing by driveway size and snowfall amount. Registration ends November 1, 2026 — limited to 20 spots.">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <title>Snow Removal &amp; Snow Blowing | Village of Oregon, WI | Nick Yard Services</title>
-    <link rel="stylesheet" href="css/style.css?v=20260929-snow26">
+    <link rel="stylesheet" href="css/style.css?v=20261004-snow23">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -75,7 +75,7 @@
                         <span class="snow-hero-title-main">Professional Snow Removal</span>
                         <span class="snow-hero-title-accent">in the Village of Oregon</span>
                     </h1>
-                    <p class="snow-hero-lead">Focused Oregon routes mean faster storm response and clear per-push pricing. Find your driveway size, lock in seasonal rates, and sign up online.</p>
+                    <p class="snow-hero-lead">Focused Oregon routes mean faster storm response and clear per-visit pricing. Find your driveway size, lock in seasonal rates, and sign up online.</p>
                     <div class="snow-hero-actions">
                         <a href="#pricing" class="btn btn-primary snow-hero-btn-primary">Get My Snow Removal Price</a>
                         <a href="tel:+16088865468" class="btn btn-secondary snow-hero-btn-secondary"><i class="fas fa-phone" aria-hidden="true"></i> Call Now</a>
@@ -113,7 +113,7 @@
         <section class="snow-pricing content-section snow-section-tight" id="pricing" aria-labelledby="pricing-heading">
             <div class="container">
                 <div class="section-header snow-section-header-compact">
-                    <span class="eyebrow">Transparent per-push pricing</span>
+                    <span class="eyebrow">Transparent per-visit pricing</span>
                     <h2 id="pricing-heading">Find Your Driveway Size &amp; Price</h2>
                     <p>Select the option that best matches your paved driveway area, then continue to signup.</p>
                 </div>
@@ -138,77 +138,89 @@
 
                 <div class="snow-pricing-panel reveal-on-scroll">
                     <p class="snow-pricing-step"><span>Step 1</span> Select driveway size</p>
+                    <p class="snow-pricing-rate-note">Each price is <strong>per visit</strong>: use the 2–5 inch rate for snowfall up to 5 inches, and the over-5-inch rate when snowfall exceeds 5 inches (1.4× the standard rate).</p>
 
                     <div class="snow-tier-grid">
-                        <article class="snow-tier-card" data-tier="500">
-                            <p class="snow-tier-sqft">0–500 sq. ft.</p>
-                            <h3 class="snow-tier-title">1–2 Car Driveway</h3>
-                            <p class="snow-tier-hint">Compact residential layout</p>
-                            <div class="snow-tier-price-block">
-                                <span class="snow-tier-price">$70</span>
-                                <span class="snow-tier-price-label">per push</span>
+                        <article class="snow-tier-card" data-tier="1200">
+                            <p class="snow-tier-sqft">Up to 1,200 sq. ft.</p>
+                            <h3 class="snow-tier-title">Small</h3>
+                            <div class="snow-tier-price-block snow-tier-rate-list">
+                                <div class="snow-tier-rate">
+                                    <span>2–5 inches</span>
+                                    <strong>$60</strong>
+                                </div>
+                                <div class="snow-tier-rate snow-tier-rate-heavy">
+                                    <span>Over 5 inches</span>
+                                    <strong>$84</strong>
+                                </div>
                             </div>
-                            <button type="button" class="btn btn-primary snow-tier-cta" data-tier="500" data-label="0–500 sq. ft. — $70/push">Get My $70 Price</button>
+                            <button type="button" class="btn btn-primary snow-tier-cta" data-tier="1200" data-label="Small — up to 1,200 sq. ft. — $60 (2–5 inches) / $84 (over 5 inches) per visit">Select Small</button>
                         </article>
 
-                        <article class="snow-tier-card" data-tier="1000">
-                            <p class="snow-tier-sqft">750–1,000 sq. ft.</p>
-                            <h3 class="snow-tier-title">2–3 Car Driveway</h3>
-                            <p class="snow-tier-hint">Standard wider driveway</p>
-                            <div class="snow-tier-price-block">
-                                <span class="snow-tier-price">$85–$100</span>
-                                <span class="snow-tier-price-label">per push</span>
+                        <article class="snow-tier-card" data-tier="2250">
+                            <p class="snow-tier-sqft">1,200–2,250 sq. ft.</p>
+                            <h3 class="snow-tier-title">Medium</h3>
+                            <div class="snow-tier-price-block snow-tier-rate-list">
+                                <div class="snow-tier-rate">
+                                    <span>2–5 inches</span>
+                                    <strong>$80</strong>
+                                </div>
+                                <div class="snow-tier-rate snow-tier-rate-heavy">
+                                    <span>Over 5 inches</span>
+                                    <strong>$112</strong>
+                                </div>
                             </div>
-                            <button type="button" class="btn btn-primary snow-tier-cta" data-tier="1000" data-label="750–1,000 sq. ft. — $85–$100/push">Get My Price</button>
+                            <button type="button" class="btn btn-primary snow-tier-cta" data-tier="2250" data-label="Medium — 1,200–2,250 sq. ft. — $80 (2–5 inches) / $112 (over 5 inches) per visit">Select Medium</button>
                         </article>
 
-                        <article class="snow-tier-card snow-tier-card-featured" data-tier="1500">
-                            <span class="snow-tier-badge">Most common</span>
-                            <p class="snow-tier-sqft">1,000–1,500 sq. ft.</p>
-                            <h3 class="snow-tier-title">3–4 Car Driveway</h3>
-                            <p class="snow-tier-hint">Typical larger home driveway</p>
-                            <div class="snow-tier-price-block">
-                                <span class="snow-tier-price">$100–$125</span>
-                                <span class="snow-tier-price-label">per push</span>
+                        <article class="snow-tier-card snow-tier-card-featured" data-tier="3000">
+                            <p class="snow-tier-sqft">2,250–3,000 sq. ft.</p>
+                            <h3 class="snow-tier-title">Large</h3>
+                            <div class="snow-tier-price-block snow-tier-rate-list">
+                                <div class="snow-tier-rate">
+                                    <span>2–5 inches</span>
+                                    <strong>$100</strong>
+                                </div>
+                                <div class="snow-tier-rate snow-tier-rate-heavy">
+                                    <span>Over 5 inches</span>
+                                    <strong>$140</strong>
+                                </div>
                             </div>
-                            <button type="button" class="btn btn-primary snow-tier-cta" data-tier="1500" data-label="1,000–1,500 sq. ft. — $100–$125/push">Get My Price</button>
+                            <button type="button" class="btn btn-primary snow-tier-cta" data-tier="3000" data-label="Large — 2,250–3,000 sq. ft. — $100 (2–5 inches) / $140 (over 5 inches) per visit">Select Large</button>
                         </article>
 
-                        <article class="snow-tier-card" data-tier="2000">
-                            <p class="snow-tier-sqft">1,500–2,000 sq. ft.</p>
-                            <h3 class="snow-tier-title">Large Driveway</h3>
-                            <p class="snow-tier-hint">Extended paved area</p>
-                            <div class="snow-tier-price-block">
-                                <span class="snow-tier-price">$150</span>
-                                <span class="snow-tier-price-label">per push</span>
+                        <article class="snow-tier-card" data-tier="4000">
+                            <p class="snow-tier-sqft">3,000–4,000 sq. ft.</p>
+                            <h3 class="snow-tier-title">Very Large</h3>
+                            <div class="snow-tier-price-block snow-tier-rate-list">
+                                <div class="snow-tier-rate">
+                                    <span>2–5 inches</span>
+                                    <strong>$130</strong>
+                                </div>
+                                <div class="snow-tier-rate snow-tier-rate-heavy">
+                                    <span>Over 5 inches</span>
+                                    <strong>$182</strong>
+                                </div>
                             </div>
-                            <button type="button" class="btn btn-primary snow-tier-cta" data-tier="2000" data-label="1,500–2,000 sq. ft. — $150/push">Get My $150 Price</button>
+                            <button type="button" class="btn btn-primary snow-tier-cta" data-tier="4000" data-label="Very Large — 3,000–4,000 sq. ft. — $130 (2–5 inches) / $182 (over 5 inches) per visit">Select Very Large</button>
                         </article>
                     </div>
 
-                    <p class="snow-pricing-step snow-pricing-step-secondary"><span>Step 2</span> Oversized driveways</p>
+                    <p class="snow-pricing-step snow-pricing-step-secondary"><span>Step 2</span> Over 4,000 sq. ft.</p>
                     <div class="snow-tier-grid snow-tier-grid-wide">
-                        <article class="snow-tier-card snow-tier-card-custom" data-tier="2500">
-                            <p class="snow-tier-sqft">2,000–2,500 sq. ft.</p>
-                            <h3 class="snow-tier-title">Very Large Driveway</h3>
-                            <div class="snow-tier-price-block">
-                                <span class="snow-tier-price snow-tier-price-custom">Special pricing</span>
-                                <span class="snow-tier-price-label">property review required</span>
-                            </div>
-                            <button type="button" class="btn btn-secondary snow-tier-cta" data-tier="2500" data-label="2,000–2,500 sq. ft. — Custom pricing">Request Custom Pricing</button>
-                        </article>
                         <article class="snow-tier-card snow-tier-card-custom" data-tier="custom">
-                            <p class="snow-tier-sqft">2,500+ sq. ft.</p>
-                            <h3 class="snow-tier-title">Estate / Complex Layout</h3>
+                            <p class="snow-tier-sqft">Over 4,000 sq. ft.</p>
+                            <h3 class="snow-tier-title">Custom Pricing</h3>
                             <div class="snow-tier-price-block">
-                                <span class="snow-tier-price snow-tier-price-custom">Special pricing</span>
-                                <span class="snow-tier-price-label">custom quote</span>
+                                <span class="snow-tier-price snow-tier-price-custom">Custom</span>
+                                <span class="snow-tier-price-label">for both snowfall categories</span>
                             </div>
-                            <button type="button" class="btn btn-secondary snow-tier-cta" data-tier="custom" data-label="2,500+ sq. ft. — Custom pricing">Request Custom Pricing</button>
+                            <button type="button" class="btn btn-secondary snow-tier-cta" data-tier="custom" data-label="Over 4,000 sq. ft. — Custom pricing">Request Custom Pricing</button>
                         </article>
                     </div>
 
-                    <p class="snow-size-hint"><i class="fas fa-ruler-combined" aria-hidden="true"></i> Measure length × width of paved area, or match the car-count label. Sizes between tiers are confirmed during property review.</p>
+                    <p class="snow-size-hint"><i class="fas fa-ruler-combined" aria-hidden="true"></i> Measure length × width of paved driveway area. Final size and pricing are confirmed during property review.</p>
+                    <p class="snow-size-hint"><i class="fas fa-check-circle" aria-hidden="true"></i> Standard, non-corner lot prices include driveway and sidewalk clearing.</p>
                     <p class="snow-size-hint"><i class="fas fa-house" aria-hidden="true"></i> Corner lots add <strong>$15 per snow service</strong> to the normal driveway price to account for additional sidewalk clearing.</p>
                     <p class="snow-size-hint"><i class="fas fa-temperature-low" aria-hidden="true"></i> <strong>Salt &amp; Ice Treatment — $20 per application.</strong> Available as an add-on when signing up for your snow removal plan. Must be selected before the snow season begins; it cannot be added once the season is underway.</p>
                 </div>
@@ -307,12 +319,11 @@
                                     <label for="snowTierSelect">Driveway Size Category *</label>
                                     <select id="snowTierSelect" name="drivewayTierSelect" required>
                                         <option value="">Select a driveway size</option>
-                                        <option value="500">0–500 sq. ft. — $70/push</option>
-                                        <option value="1000">750–1,000 sq. ft. — $85–$100/push</option>
-                                        <option value="1500">1,000–1,500 sq. ft. — $100–$125/push</option>
-                                        <option value="2000">1,500–2,000 sq. ft. — $150/push</option>
-                                        <option value="2500">2,000–2,500 sq. ft. — Custom pricing</option>
-                                        <option value="custom">2,500+ sq. ft. — Custom pricing</option>
+                                        <option value="1200">Small — up to 1,200 sq. ft. — $60 (2–5 inches) / $84 (over 5 inches)</option>
+                                        <option value="2250">Medium — 1,200–2,250 sq. ft. — $80 (2–5 inches) / $112 (over 5 inches)</option>
+                                        <option value="3000">Large — 2,250–3,000 sq. ft. — $100 (2–5 inches) / $140 (over 5 inches)</option>
+                                        <option value="4000">Very Large — 3,000–4,000 sq. ft. — $130 (2–5 inches) / $182 (over 5 inches)</option>
+                                        <option value="custom">Over 4,000 sq. ft. — Custom pricing</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -364,7 +375,7 @@
                                 <p class="snow-wizard-pane-intro">Please read the summary below and confirm each item to continue.</p>
                                 <div class="snow-terms-readout" id="snowTermsSummary" aria-label="Service terms summary">
                                     <ul class="snow-terms-readout-list">
-                                        <li>Seasonal snow removal with per-push pricing based on your verified driveway category.</li>
+                                        <li>Seasonal snow removal is charged per visit based on your verified driveway category: the standard rate applies to 2–5 inches of snowfall, and snowfall over 5 inches is charged at 1.4× the standard rate.</li>
                                         <li>The <strong>2-inch accumulation trigger starts service</strong>. Larger storms may require an initial clearing and a final clearing after snowfall ends. Timing depends on snowfall rate, weather and road conditions, and the number of properties being serviced.</li>
                                         <li>Corner lots add <strong>$15 per snow service</strong> to the normal driveway price for additional sidewalk clearing.</li>
                                         <li>Optional Salt &amp; Ice Treatment is $20 per application. It must be selected at signup before the season begins and cannot be added once the season is underway.</li>
@@ -469,15 +480,15 @@
                     </details>
                     <details class="snow-faq-item reveal-on-scroll">
                         <summary>How do I pick the right driveway size?</summary>
-                        <p>Measure length × width of your paved driveway, or use the car-count labels in the pricing table. We confirm the correct tier during property review.</p>
+                        <p>Measure length × width of your paved driveway and match it to the square-foot ranges in the pricing table. We confirm the correct tier during property review.</p>
                     </details>
                     <details class="snow-faq-item reveal-on-scroll">
                         <summary>What is included in driveway snow removal?</summary>
-                        <p>Driveway snow blowing is included. Sidewalks, walkways, and other areas are included only when specified in your service agreement.</p>
+                        <p>Listed prices include driveway and sidewalk clearing for standard, non-corner lots. Corner lots add $15 per snow service to the normal driveway price for additional sidewalk clearing. Other areas are included only when specified in your service agreement.</p>
                     </details>
                     <details class="snow-faq-item reveal-on-scroll">
                         <summary>Are sidewalks included, and how much do they cost?</summary>
-                        <p>Sidewalk clearing must be confirmed in your agreement; there is no separate standard sidewalk price listed. Corner lots add $15 per snow service to the normal driveway price to account for additional sidewalk clearing.</p>
+                        <p>Driveway and sidewalk clearing are included in the listed prices for standard, non-corner lots. Corner lots add $15 per snow service to the normal driveway price for additional sidewalk clearing.</p>
                     </details>
                     <details class="snow-faq-item reveal-on-scroll">
                         <summary>How does corner-lot pricing work?</summary>
@@ -505,7 +516,7 @@
                     </details>
                     <details class="snow-faq-item reveal-on-scroll">
                         <summary>How do contracts and pricing work?</summary>
-                        <p>Driveway pricing is per push based on the verified driveway size. Corner lots add $15 per service, and salt and ice treatment is an optional $20 per application. A signed seasonal agreement and valid card on file are required before service begins; Nick will follow up to finalize the agreement.</p>
+                        <p>Pricing is per visit based on the verified driveway size and snowfall amount. Snowfall over 5 inches is charged at 1.4× the standard rate. Corner lots add $15 per service, and salt and ice treatment is an optional $20 per application. A signed seasonal agreement and valid card on file are required before service begins; Nick will follow up to finalize the agreement.</p>
                     </details>
                     <details class="snow-faq-item reveal-on-scroll">
                         <summary>How will I know my service has been completed?</summary>
@@ -590,6 +601,6 @@
         </div>
     </footer>
 
-    <script src="js/script.js?v=20261001-snow20"></script>
+    <script src="js/script.js?v=20261004-snow22"></script>
 </body>
 </html>

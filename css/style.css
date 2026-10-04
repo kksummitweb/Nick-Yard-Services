@@ -3280,6 +3280,21 @@ section {
     margin-top: 1.35rem;
 }
 
+.snow-pricing-rate-note {
+    margin: 0 0 1.15rem;
+    padding: 0.9rem 1.1rem;
+    border-left: 3px solid var(--hero-accent);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    background: linear-gradient(100deg, rgba(168, 225, 239, 0.1), rgba(168, 225, 239, 0.035));
+    color: var(--text-light);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.snow-pricing-rate-note strong {
+    color: #fff;
+}
+
 .snow-tier-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -3366,6 +3381,43 @@ section {
     margin: 0.35rem 0 0.75rem;
     padding: 0.65rem 0 0;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.snow-tier-rate-list {
+    display: grid;
+    gap: 0;
+    padding: 0.5rem 0.7rem;
+    border: 1px solid rgba(168, 225, 239, 0.1);
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.025);
+}
+
+.snow-tier-rate {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem;
+    color: var(--text-light);
+    font-size: 0.8rem;
+    line-height: 1.3;
+}
+
+.snow-tier-rate + .snow-tier-rate {
+    margin-top: 0.35rem;
+    padding-top: 0.35rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.snow-tier-rate strong {
+    flex: 0 0 auto;
+    color: #fff;
+    font-family: 'Manrope', sans-serif;
+    font-size: 1.3rem;
+    line-height: 1;
+}
+
+.snow-tier-rate-heavy strong {
+    color: var(--hero-accent);
 }
 
 .snow-tier-price {
@@ -3959,4 +4011,3 @@ section {
     }
 
 }
-
